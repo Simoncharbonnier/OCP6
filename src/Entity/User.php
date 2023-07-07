@@ -7,11 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['username', 'mail'])]
-class User
+class User implements PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -31,7 +32,7 @@ class User
     private ?string $avatar = null;
 
     #[ORM\Column]
-    private ?bool $enabled = null;
+    private ?bool $enabled = false;
 
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Trick::class, orphanRemoval: true)]
     private Collection $tricks;
