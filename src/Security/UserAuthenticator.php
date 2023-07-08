@@ -14,6 +14,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Repository\UserRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
 class UserAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -21,9 +24,10 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, ManagerRegistry $registry)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->registry = $registry;
     }
 
     public function authenticate(Request $request): Passport
@@ -31,6 +35,12 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $username = $request->request->get('username', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $username);
+
+        $userRepository = new UserRepository($this->registry);
+        $user = $userRepository->findOneBy(['username' => $username]);
+        if (!$user->isEnabled()) {
+            throw new CustomUserMessageAuthenticationException('Veuillez activer votre compte en cliquant sur le lien reçu par mail avant de vous connecter.');
+        }
 
         return new Passport(
             new UserBadge($username),
