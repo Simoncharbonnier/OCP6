@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +15,6 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-use App\Repository\UserRepository;
 
 class RegistrationController extends AbstractController
 {
@@ -48,7 +48,7 @@ class RegistrationController extends AbstractController
                     ->from(new Address('simoncharbonnier.blog@gmail.com', 'SnowTricks Bot'))
                     ->to($user->getMail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('mail/confirmation_email.html.twig')
             );
 
             return $this->redirectToRoute('app_home');

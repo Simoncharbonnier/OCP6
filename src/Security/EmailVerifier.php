@@ -50,4 +50,15 @@ class EmailVerifier
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
+
+    public function sendEmailResetPassword(string $url, UserInterface $user, TemplatedEmail $email): void
+    {
+        $context = $email->getContext();
+        $context['username'] = $user->getUsername();
+        $context['url'] = $url;
+
+        $email->context($context);
+
+        $this->mailer->send($email);
+    }
 }
