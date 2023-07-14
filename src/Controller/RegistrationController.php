@@ -19,10 +19,12 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
+    private UserRepository $userRepository;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(EmailVerifier $emailVerifier, UserRepository $userRepository)
     {
         $this->emailVerifier = $emailVerifier;
+        $this->userRepository = $userRepository;
     }
 
     #[Route('/inscription', name: 'app_register')]
@@ -33,25 +35,30 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            $userWithMail = $this->userRepository->findOneBy(['mail' => $user->getMail()]);
+            if ($userWithMail === null) {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('simoncharbonnier.blog@gmail.com', 'SnowTricks Bot'))
-                    ->to($user->getMail())
-                    ->subject('Activation du compte')
-                    ->htmlTemplate('mail/confirmation_email.html.twig')
-            );
+                $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('simoncharbonnier.blog@gmail.com', 'SnowTricks Bot'))
+                        ->to($user->getMail())
+                        ->subject('Activation du compte')
+                        ->htmlTemplate('mail/confirmation_email.html.twig')
+                );
 
-            return $this->redirectToRoute('app_home');
+                return $this->redirectToRoute('app_home');
+            }
+
+            $this->addFlash('danger', 'Un utilisateur avec ce mail existe déjà.');
         }
 
         return $this->render('registration/register.html.twig', [
