@@ -20,7 +20,7 @@ use Symfony\Component\Mime\Address;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
@@ -36,13 +36,13 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/logout', name: 'app_logout')]
+    #[Route(path: '/déconnexion', name: 'app_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    #[Route('/forgot', name:'app_forgot')]
+    #[Route('/mot-de-passe-oublié', name:'app_forgot')]
     public function forgottenPassword(
         Request $request,
         UserRepository $userRepository,
@@ -69,7 +69,7 @@ class SecurityController extends AbstractController
                     (new TemplatedEmail())
                         ->from(new Address('simoncharbonnier.blog@gmail.com', 'SnowTricks Bot'))
                         ->to($user->getMail())
-                        ->subject('Réinitialisation de mot de passe')
+                        ->subject('Réinitialisation du mot de passe')
                         ->htmlTemplate('mail/reset_password_email.html.twig')
                 );
 
@@ -85,7 +85,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('/reset/{token}', name:'app_reset')]
+    #[Route('/réinitialisation-mot-de-passe/{token}', name:'app_reset')]
     public function resetPassword(
         string $token,
         Request $request,
@@ -112,7 +112,7 @@ class SecurityController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Mot de passe changé avec succès');
-                return $this->redirectToRoute('app_login');
+                return $this->redirectToRoute('app_home');
             }
 
             return $this->render('security/reset_password.html.twig', [
@@ -121,6 +121,6 @@ class SecurityController extends AbstractController
         }
 
         $this->addFlash('danger', 'Jeton invalide');
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_home');
     }
 }

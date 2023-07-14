@@ -25,7 +25,7 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('/register', name: 'app_register')]
+    #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('simoncharbonnier.blog@gmail.com', 'SnowTricks Bot'))
                     ->to($user->getMail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Activation du compte')
                     ->htmlTemplate('mail/confirmation_email.html.twig')
             );
 
@@ -59,7 +59,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/verify/email', name: 'app_verify_email')]
+    #[Route('/activer-compte', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {
         $id = $request->query->get('id');

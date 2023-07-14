@@ -17,7 +17,8 @@ class ForgotPasswordFormType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => 'Nom d\'utilisateur',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez votre nom d\'utilisateur'
                 ],
                 'constraints' => [
                     new NotBlank([

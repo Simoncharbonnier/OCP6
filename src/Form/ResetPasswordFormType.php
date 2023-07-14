@@ -18,7 +18,8 @@ class ResetPasswordFormType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => 'Nom d\'utilisateur',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez votre nom d\'utilisateur'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -27,9 +28,10 @@ class ResetPasswordFormType extends AbstractType
                 ]
             ])
             ->add('password', PasswordType::class, [
-                'label' => 'Entrez votre nouveau mot de passe',
+                'label' => 'Nouveau mot de passe',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez votre nouveau mot de passe'
                 ],
                 'constraints' => [
                     new NotBlank([

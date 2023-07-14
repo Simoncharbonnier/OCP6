@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}SnowTricks | Accueil{% endblock %}
 
 {% block body %}
 <style>
@@ -17,4 +17,8 @@
         <li>Your template at <code><a href="{{ '/opt/lampp/htdocs/P6/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
     </ul>
 </div>
+
+<a href="{{ path('app_login') }}">Connexion</a>
+<a href="{{ path('app_register') }}">Inscription</a>
+
 {% endblock %}
