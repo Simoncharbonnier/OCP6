@@ -1,29 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}SnowTricks | Connexion{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
 
-        {% if app.user %}
-            <div class="mb-3">
-                Vous êtes connecté.e comme {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Me déconnecter</a>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="text-center mb-5">
+                <h1 class="fw-bolder">Connexion</h1>
             </div>
-        {% endif %}
+            <div class="card rounded-3 py-5 px-4 px-md-5 mb-5">
+                <div class="card-body">
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-10">
+                            <form method="post">
+                                <div class="form-floating mb-3">
+                                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Entrez votre nom d'utilisateur" autocomplete="username" required autofocus>
+                                    <label for="inputUsername">Nom d'utilisateur</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Entrez votre mot de passe" autocomplete="current-password">
+                                    <label for="inputPassword">Mot de passe</label>
+                                </div>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <h1 class="h3 mb-3 font-weight-normal">S'identifier</h1>
-        <label for="inputUsername">Nom d'utilisateur</label>
-        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-        <label for="inputPassword">Mot de passe</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password">
+                                <a href="{{ path('app_forgot') }}">Mot de passe oublié ?</a>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <button class="btn btn-lg btn-primary" type="submit">
-            Me connecter
-        </button>
-    </form>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Me connecter</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

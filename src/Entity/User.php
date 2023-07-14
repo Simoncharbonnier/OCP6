@@ -35,6 +35,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $enabled = false;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $reset_token;
+
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Trick::class, orphanRemoval: true)]
     private Collection $tricks;
 
@@ -108,6 +111,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEnabled(bool $enabled): static
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->reset_token;
+    }
+
+    public function setResetToken(?string $reset_token): static
+    {
+        $this->reset_token = $reset_token;
 
         return $this;
     }

@@ -21,19 +21,22 @@ class RegistrationFormType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => 'Nom d\'utilisateur',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez votre nom d\'utilisateur'
                 ]
             ])
             ->add('mail', EmailType::class, [
                 'label' => 'Mail',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez votre adresse mail'
                 ]
             ])
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'attr' => [
                     'class' => 'form-control',
+                    'placeholder' => 'Entrez votre mot de passe',
                     'autocomplete' => 'new-password'
                 ],
                 'mapped' => false,
