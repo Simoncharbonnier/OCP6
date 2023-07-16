@@ -7,3 +7,12 @@ a:hover {
     text-decoration: underline;
     color: inherit;
 }
+
+.alert {
+    display: flex;
+    justify-content: space-between;
+}
+
+.alert .close {
+    cursor: pointer;
+}

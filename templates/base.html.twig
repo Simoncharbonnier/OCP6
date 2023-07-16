@@ -6,6 +6,7 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         <link href="/assets/css/bootstrap_theme.css" rel="stylesheet">
         <link href="/assets/css/global.css" rel="stylesheet">
+        <script src="/assets/js/global.js"></script>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -17,6 +18,11 @@
     </head>
     <body>
         <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ include('_partials/_flash_messages.html.twig') }}
+                </div>
+            </div>
             {% block body %}{% endblock %}
         </div>
     </body>

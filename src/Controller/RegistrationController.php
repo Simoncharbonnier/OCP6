@@ -55,10 +55,11 @@ class RegistrationController extends AbstractController
                         ->htmlTemplate('mail/confirmation_email.html.twig')
                 );
 
+                $this->addFlash('success', 'Votre compte a bien été créé, veuillez le valider en cliquant sur le lien reçu par mail.');
                 return $this->redirectToRoute('app_home');
             }
 
-            $this->addFlash('danger', 'Un utilisateur avec ce mail existe déjà.');
+            $this->addFlash('danger', 'Un compte existant utilise déjà ce mail.');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -71,22 +72,24 @@ class RegistrationController extends AbstractController
     {
         $id = $request->query->get('id');
         if (null === $id) {
-            return $this->redirectToRoute('app_home');
+            $this->addFlash('danger', 'Un problème est survenu.');
+            return $this->redirectToRoute('app_register');
         }
 
         $user = $userRepository->find($id);
         if (null === $user) {
-            return $this->redirectToRoute('app_home');
+            $this->addFlash('danger', 'Un problème est survenu.');
+            return $this->redirectToRoute('app_register');
         }
 
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $user);
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $exception->getReason());
-
+            $this->addFlash('danger', $exception->getReason());
             return $this->redirectToRoute('app_register');
         }
 
+        $this->addFlash('success', 'Votre compte a bien été validé, vous pouvez vous connecter dès maintenant !');
         return $this->redirectToRoute('app_login');
     }
 }
