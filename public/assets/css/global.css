@@ -1,7 +1,48 @@
+body {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 10vh;
+}
+
+nav {
+    height: 10vh;
+}
+
 footer {
+    width: 100%;
     position: absolute;
     bottom: 0;
+    height: 10vh;
+    padding: 20px 0;
+}
+
+.alert .close:hover {
+    cursor: pointer;
+}
+
+.banner {
+    position: relative;
     width: 100%;
+    height: 90vh;
+    background-image: url("/assets/img/snowtricks_banner.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.banner .down {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.banner .down:hover {
+    cursor: pointer;
+}
+
+.banner .down img {
+    width: 50px;
 }
 
 a {
@@ -12,13 +53,4 @@ a {
 a:hover {
     text-decoration: underline;
     color: inherit;
-}
-
-.alert {
-    display: flex;
-    justify-content: space-between;
-}
-
-.alert .close {
-    cursor: pointer;
 }
