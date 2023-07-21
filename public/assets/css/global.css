@@ -17,8 +17,8 @@ footer {
     padding: 20px 0;
 }
 
-.alert .close:hover {
-    cursor: pointer;
+.alert {
+    border-radius: 0;
 }
 
 .banner {
@@ -37,10 +37,6 @@ footer {
     right: 20px;
 }
 
-.banner .down:hover {
-    cursor: pointer;
-}
-
 .banner .down img {
     width: 50px;
 }
@@ -53,4 +49,8 @@ a {
 a:hover {
     text-decoration: underline;
     color: inherit;
+}
+
+.icon:hover {
+    cursor: pointer;
 }
