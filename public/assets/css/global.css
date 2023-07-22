@@ -51,6 +51,17 @@ a:hover {
     color: inherit;
 }
 
+.icon {
+    transition: all .5s;
+}
+
 .icon:hover {
     cursor: pointer;
+    opacity: .6;
+}
+
+.col-5ths {
+    width: 20%;
+    padding-right: 15px;
+    padding-left: 15px;
 }
