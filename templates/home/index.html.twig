@@ -1,24 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SnowTricks | Accueil{% endblock %}
+{% block title %}
+	SnowTricks | Accueil
+{% endblock %}
+
+{% block banner %}
+	<div class="banner">
+		<div class="container h-100">
+			<div class="row align-items-center justify-content-center h-100">
+				<div class="col-md-10 text-center">
+					<h1 class="display-5 fw-bolder text-white">SnowTricks : le site communautaire</h1>
+				</div>
+			</div>
+		</div>
+		<div class="icon down">
+			<img src="/assets/img/icons/down.svg" alt="down">
+		</div>
+	</div>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/opt/lampp/htdocs/P6/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/opt/lampp/htdocs/P6/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
-
-<a href="{{ path('app_login') }}">Connexion</a>
-<a href="{{ path('app_register') }}">Inscription</a>
-
+	<div class="row">
+		{% for trick in tricks %}
+			<div class="col-5ths mb-5">
+				<div class="card h-100 shadow border-0">
+					<img class="card-img-top" src="/assets/img/snowtricks_banner.jpg" alt="Figure image"/>
+					<div class="card-body d-flex align-items-center justify-content-between p-4">
+						<a href="">
+							<h5 class="card-title mb-0">{{ trick.name }}</h5>
+						</a>
+						{% if app.user is same as trick.user %}
+							<div class="icons">
+								<a class="icon text-decoration-none" href="">
+									<img src="/assets/img/icons/edit.svg" alt="edit">
+								</a>
+								<a class="icon text-decoration-none" href="">
+									<img src="/assets/img/icons/delete.svg" alt="delete">
+								</a>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<div class="row">
+		<div class="col-md-12 d-flex justify-content-center">
+			{{ knp_pagination_render(tricks) }}
+		</div>
+	</div>
 {% endblock %}

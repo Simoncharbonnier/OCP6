@@ -73,10 +73,11 @@ class SecurityController extends AbstractController
                         ->htmlTemplate('mail/reset_password_email.html.twig')
                 );
 
-                $this->addFlash('success', 'Email envoyé avec succès');
+                $this->addFlash('success', 'Email envoyé avec succès.');
                 return $this->redirectToRoute('app_login');
             }
-            $this->addFlash('danger', 'Un problème est survenu');
+
+            $this->addFlash('danger', 'Un problème est survenu.');
             return $this->redirectToRoute('app_login');
         }
 
@@ -111,7 +112,7 @@ class SecurityController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Mot de passe changé avec succès');
+                $this->addFlash('success', 'Mot de passe changé avec succès.');
                 return $this->redirectToRoute('app_home');
             }
 
@@ -120,7 +121,7 @@ class SecurityController extends AbstractController
             ]);
         }
 
-        $this->addFlash('danger', 'Jeton invalide');
+        $this->addFlash('danger', 'Jeton invalide.');
         return $this->redirectToRoute('app_home');
     }
 }

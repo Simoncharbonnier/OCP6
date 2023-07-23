@@ -1,3 +1,46 @@
+body {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 10vh;
+}
+
+nav {
+    height: 10vh;
+}
+
+footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 10vh;
+    padding: 20px 0;
+}
+
+.alert {
+    border-radius: 0;
+}
+
+.banner {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    background-image: url("/assets/img/snowtricks_banner.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.banner .down {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.banner .down img {
+    width: 50px;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -5,5 +48,31 @@ a {
 
 a:hover {
     text-decoration: underline;
+    color: inherit;
+}
+
+.icon {
+    transition: all .5s;
+}
+
+.icon:hover {
+    cursor: pointer;
+    opacity: .6;
+}
+
+.col-5ths {
+    width: 20%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: rgba(33, 37, 41, 1);
+    color: white;
+    border: none;
+}
+
+.pagination .page-item .page-link {
+    text-decoration: none;
     color: inherit;
 }
