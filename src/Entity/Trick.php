@@ -8,9 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Cocur\Slugify\Slugify;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-#[UniqueEntity('name')]
+#[UniqueEntity(fields: ['name', 'slug'])]
 class Trick
 {
     #[ORM\Id]
@@ -24,6 +25,9 @@ class Trick
 
     #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
+
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
@@ -78,8 +82,14 @@ class Trick
     public function setName(string $name): static
     {
         $this->name = $name;
+        $this->slug = (new Slugify())->slugify($name);
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 
     public function getDescription(): ?string
