@@ -37,13 +37,13 @@ class Trick
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $updated_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'trick_id', targetEntity: Image::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class, orphanRemoval: true, fetch: 'EAGER')]
     private Collection $images;
 
-    #[ORM\OneToMany(mappedBy: 'trick_id', targetEntity: Video::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, orphanRemoval: true, fetch: 'EAGER')]
     private Collection $videos;
 
-    #[ORM\OneToMany(mappedBy: 'trick_id', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true, fetch: 'EAGER')]
     private Collection $comments;
 
     public function __construct()
@@ -142,7 +142,7 @@ class Trick
     {
         if (!$this->images->contains($image)) {
             $this->images->add($image);
-            $image->setTrickId($this);
+            $image->setTrick($this);
         }
 
         return $this;
@@ -152,8 +152,8 @@ class Trick
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
-            if ($image->getTrickId() === $this) {
-                $image->setTrickId(null);
+            if ($image->getTrick() === $this) {
+                $image->setTrick(null);
             }
         }
 
@@ -172,7 +172,7 @@ class Trick
     {
         if (!$this->videos->contains($video)) {
             $this->videos->add($video);
-            $video->setTrickId($this);
+            $video->setTrick($this);
         }
 
         return $this;
@@ -182,8 +182,8 @@ class Trick
     {
         if ($this->videos->removeElement($video)) {
             // set the owning side to null (unless already changed)
-            if ($video->getTrickId() === $this) {
-                $video->setTrickId(null);
+            if ($video->getTrick() === $this) {
+                $video->setTrick(null);
             }
         }
 
@@ -202,7 +202,7 @@ class Trick
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
-            $comment->setTrickId($this);
+            $comment->setTrick($this);
         }
 
         return $this;
@@ -212,8 +212,8 @@ class Trick
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getTrickId() === $this) {
-                $comment->setTrickId(null);
+            if ($comment->getTrick() === $this) {
+                $comment->setTrick(null);
             }
         }
 

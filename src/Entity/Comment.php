@@ -16,11 +16,11 @@ class Comment
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_id = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Trick $trick_id = null;
+    private ?Trick $trick = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $message = null;
@@ -33,26 +33,26 @@ class Comment
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): static
+    public function setUser(?User $user): static
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getTrickId(): ?Trick
+    public function getTrick(): ?Trick
     {
-        return $this->trick_id;
+        return $this->trick;
     }
 
-    public function setTrickId(?Trick $trick_id): static
+    public function setTrick(?Trick $trick): static
     {
-        $this->trick_id = $trick_id;
+        $this->trick = $trick;
 
         return $this;
     }
