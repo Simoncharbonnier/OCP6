@@ -65,3 +65,14 @@ a:hover {
     padding-right: 15px;
     padding-left: 15px;
 }
+
+.pagination .page-item.active .page-link {
+    background-color: rgba(33, 37, 41, 1);
+    color: white;
+    border: none;
+}
+
+.pagination .page-item .page-link {
+    text-decoration: none;
+    color: inherit;
+}
