@@ -25,7 +25,6 @@ footer {
     position: relative;
     width: 100%;
     height: 90vh;
-    background-image: url("/assets/img/snowtricks_banner.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -39,6 +38,18 @@ footer {
 
 .banner .down img {
     width: 50px;
+}
+
+.banner .icons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+}
+
+.banner .icons img {
+    width: 25px;
+    margin-left: 5px;
 }
 
 a {
@@ -75,4 +86,28 @@ a:hover {
 .pagination .page-item .page-link {
     text-decoration: none;
     color: inherit;
+}
+
+.row-img-vid img,
+.row-img-vid video {
+    max-width: inherit;
+}
+
+.border-bottom {
+    border-bottom: 1px solid lightgrey;
+}
+
+.col-gap {
+    column-gap: 10px;
+}
+
+.card-info {
+    width: fit-content;
+    padding: 5px 10px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+textarea {
+    height: auto !important;
 }

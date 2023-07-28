@@ -2,27 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\User;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ForgotPasswordFormType extends AbstractType
+class CommentFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username', TextType::class, [
-                'label' => 'Nom d\'utilisateur',
+            ->add('message', TextareaType::class, [
+                'label' => 'Message',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez votre nom d\'utilisateur'
+                    'placeholder' => 'Entrez votre message',
+                    'cols' => 50,
+                    'rows' => 3
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Votre nom d\'utilisateur ne peut être vide.'
+                        'message' => 'Votre message ne peut être vide.'
                     ])
                 ]
             ])
@@ -32,7 +34,7 @@ class ForgotPasswordFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Comment::class,
         ]);
     }
 }

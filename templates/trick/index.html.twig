@@ -1,7 +1,131 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	SnowTricks | Figure
+	SnowTricks |
+	{{ trick.name }}
 {% endblock %}
 
-{% block body %}{% endblock %}
+{% block banner %}
+	{% set bannerImage = trick.images.first() ? '/assets/img/tricks/' ~ trick.images.first().name : '/assets/img/snowtricks_banner.jpg' %}
+
+	<style>
+		.banner {
+			background-image: url({{ bannerImage }});
+		}
+	</style>
+
+	<div class="banner">
+		<div class="container h-100">
+			<div class="row align-items-center justify-content-center h-100">
+				<div class="col-md-10 text-center">
+					<h1 class="display-5 fw-bolder text-white">{{ trick.name }}</h1>
+				</div>
+			</div>
+		</div>
+		{% if app.user is same as trick.user %}
+			<div class="icons">
+				<div class="icon">
+					<img src="/assets/img/icons/edit.svg" alt="edit">
+				</div>
+				<div class="icon">
+					<img src="/assets/img/icons/delete.svg" alt="delete">
+				</div>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block body %}
+	<div class="row row-img-vid justify-content-center">
+		{% if trick.images %}
+			{% for image in trick.images %}
+				<div class="col-md-2">
+					<img src="/assets/img/tricks/{{ image.name }}" alt="{{ trick.name }}">
+				</div>
+			{% endfor %}
+		{% endif %}
+		{% if trick.videos %}
+			{% for video in trick.videos %}
+				<div class="col-md-2">
+					<video src="{{ video.name }}"></video>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+	<div class="row justify-content-center mt-5">
+		<div class="col-md-10">
+			<p>
+				{{ trick.description }}
+			</p>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-md-8 d-flex justify-content-center col-gap border-bottom py-4">
+			<div class="card-info">
+				Créé le
+				{{ trick.getCreatedAt().format('d/m/Y') }}
+			</div>
+			{% if trick.getCreatedAt().format('d/m/Y') != trick.getUpdatedAt().format('d/m/Y') %}
+				<div class="card-info">
+					Mis à jour le
+					{{ trick.getUpdatedAt().format('d/m/Y') }}
+				</div>
+			{% endif %}
+			{% if trick.collection %}
+				<div class="card-info">
+					{{ trick.collection }}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-md-8 d-flex justify-content-center border-bottom py-4">
+			{% if app.user %}
+				{{ form_start(commentForm) }}
+				<div class="form-floating mb-3">
+					{{ form_widget(commentForm.message) }}
+					{{ form_label(commentForm.message) }}
+					{{ form_errors(commentForm.message) }}
+				</div>
+				<div class="d-grid">
+					<button class="btn btn-primary" id="submitButton" type="submit">Laisser un commentaire</button>
+				</div>
+				{{ form_end(commentForm) }}
+			{% else %}
+				<p class="mb-0">
+					<i>Veuillez vous connecter pour ajouter un commentaire.</i>
+				</p>
+			{% endif %}
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			{% if comments.items %}
+				{% for comment in comments %}
+					{% set avatar = comment.user.avatar ?? 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' %}
+					<div class="d-flex mt-4">
+						<div class="flex-shrink-0"><img class="rounded-circle" src="{{ avatar }}" alt=""/></div>
+						<div class="w-100 mx-3">
+							<div class="fw-bold">{{ comment.user.username }}</div>
+							{{ comment.message }}
+						</div>
+						<div class="d-flex justify-content-end">
+							{{ comment.getCreatedAt().format('d/m/Y') }}
+						</div>
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="w-100 text-center">
+					<p class="my-4">
+						<i>Pas encore de commentaires.</i>
+					</p>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="row mt-4">
+		<div class="col-md-12 d-flex justify-content-center">
+			{{ knp_pagination_render(comments) }}
+		</div>
+	</div>
+{% endblock %}

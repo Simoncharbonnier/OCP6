@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\Criteria;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 #[UniqueEntity(fields: ['name', 'slug'])]
@@ -206,6 +207,16 @@ class Trick
     public function getComments(): Collection
     {
         return $this->comments;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getSortedComments(): Collection
+    {
+        $criteria = Criteria::create()->orderBy([ 'id' => Criteria::DESC ]);
+
+        return $this->comments->matching($criteria);
     }
 
     public function addComment(Comment $comment): static
