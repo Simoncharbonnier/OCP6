@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TrickRepository;
+use App\Form\TrickFormType;
 use App\Form\CommentFormType;
 use App\Entity\Trick;
 use App\Entity\Comment;
@@ -65,6 +66,34 @@ class TrickController extends AbstractController
         ]);
     }
 
-    public function getSortedComments()
-    {}
+    #[Route('/ajouter-figure', name: 'app_trick_new')]
+    public function new(
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        $trick = new Trick();
+        $form = $this->createForm(TrickFormType::class, $trick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setUser($this->getUser());
+            $trick->setCreatedAt(new DateTimeImmutable('now'));
+            $trick->setUpdatedAt(new DateTimeImmutable('now'));
+
+            $entityManager->persist($trick);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Figure ajoutée.');
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('trick/new.html.twig', [
+            'trickForm' => $form->createView()
+        ]);
+    }
 }
