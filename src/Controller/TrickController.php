@@ -96,4 +96,44 @@ class TrickController extends AbstractController
             'trickForm' => $form->createView()
         ]);
     }
+
+    #[Route('/modifier-figure/{slug}', name: 'app_trick_edit')]
+    public function edit(
+        string $slug,
+        TrickRepository $trickRepository,
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response
+    {
+        $trick = $trickRepository->findBy(['slug' => $slug]);
+        if (empty($trick)) {
+            $this->addFlash('danger', 'Cette figure n\'existe pas.');
+            return $this->redirectToRoute('app_home');
+        }
+        $trick = $trick[0];
+
+        if (!$this->getUser() || $this->getUser() !== $trick->getUser()) {
+            $this->addFlash('danger', 'Vous n\'avez pas les permissions.');
+            return $this->redirectToRoute('app_trick', [ 'slug' => $slug ]);
+        }
+
+        $form = $this->createForm(TrickFormType::class, $trick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dump($trick);die;
+            $trick->setUpdatedAt(new DateTimeImmutable('now'));
+
+            $entityManager->persist($trick);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Figure modifiée.');
+            return $this->redirectToRoute('app_trick', [ 'slug' => $slug ]);
+        }
+
+        return $this->render('trick/edit.html.twig', [
+            'trick' => $trick,
+            'trickForm' => $form->createView()
+        ]);
+    }
 }

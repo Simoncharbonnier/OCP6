@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	SnowTricks | Nouvelle figure
+{% endblock %}
+
+{% block body %}
+	<div class="row justify-content-center">
+		<div class="col-md-8 d-flex justify-content-center py-4">
+			{{ form_start(trickForm) }}
+			<div class="form-floating mb-3">
+				{{ form_widget(trickForm.name) }}
+				{{ form_label(trickForm.name) }}
+				{{ form_errors(trickForm.name) }}
+			</div>
+			<div class="form-floating mb-3">
+				{{ form_widget(trickForm.description) }}
+				{{ form_label(trickForm.description) }}
+				{{ form_errors(trickForm.description) }}
+			</div>
+			<div class="form-floating mb-3">
+				{{ form_widget(trickForm.collection) }}
+				{{ form_label(trickForm.collection) }}
+				{{ form_errors(trickForm.collection) }}
+			</div>
+			<div class="d-grid">
+				<button class="btn btn-primary" id="submitButton" type="submit">Sauvegarder</button>
+			</div>
+			{{ form_end(trickForm) }}
+		</div>
+	</div>
+{% endblock %}

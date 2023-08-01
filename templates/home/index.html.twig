@@ -37,7 +37,7 @@
 						</a>
 						{% if app.user is same as trick.user %}
 							<div class="icons">
-								<a class="icon text-decoration-none" href="">
+								<a class="icon text-decoration-none" href="{{ path('app_trick_edit', { 'slug': trick.slug }) }}">
 									<img src="/assets/img/icons/edit.svg" alt="edit">
 								</a>
 								<a class="icon text-decoration-none" href="">
