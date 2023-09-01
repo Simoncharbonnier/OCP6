@@ -85,6 +85,33 @@ class TrickController extends AbstractController
             $trick->setCreatedAt(new DateTimeImmutable('now'));
             $trick->setUpdatedAt(new DateTimeImmutable('now'));
 
+            if ($trick->getImages()) {
+                $counter = 0;
+                foreach ($trick->getImages() as $image) {
+                    $image->setTrick($trick);
+                    $imageName = $trick->getName().'-'.$counter.'.jpg';
+
+                    if (move_uploaded_file($image->getName(), 'assets/img/tricks/'.$imageName) === TRUE) {
+                        $image->setName($imageName);
+                        $entityManager->persist($image);
+                        $counter++;
+                    } else {
+                        $trick->removeImage($image);
+                    }
+                }
+            }
+
+            if ($trick->getVideos()) {
+                foreach ($trick->getVideos() as $video) {
+                    $video->setTrick($trick);
+                    if ($video->getName()) {
+                        $entityManager->persist($video);
+                    } else {
+                        $trick->removeVideo($video);
+                    }
+                }
+            }
+
             $entityManager->persist($trick);
             $entityManager->flush();
 

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-
+    // Pagination
     const pagination = document.querySelector('.pagination');
     if (pagination) {
         const items = pagination.querySelectorAll('.page-item');

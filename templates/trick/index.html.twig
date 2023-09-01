@@ -39,15 +39,15 @@
 	<div class="row row-img-vid justify-content-center">
 		{% if trick.images %}
 			{% for image in trick.images %}
-				<div class="col-md-2">
+				<div class="wrapper d-flex align-items-center m-3" style="width: 18rem; height: 162px;">
 					<img src="/assets/img/tricks/{{ image.name }}" alt="{{ trick.name }}">
 				</div>
 			{% endfor %}
 		{% endif %}
 		{% if trick.videos %}
 			{% for video in trick.videos %}
-				<div class="col-md-2">
-					<video src="{{ video.name }}"></video>
+				<div class="wrapper d-flex align-items-center m-3" style="width: 18rem; height: 162px;">
+					<iframe src="https://www.youtube.com/embed/{{ video.name }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 			{% endfor %}
 		{% endif %}
@@ -93,39 +93,45 @@
 				{{ form_end(commentForm) }}
 			{% else %}
 				<p class="mb-0">
-					<i>Veuillez vous connecter pour ajouter un commentaire.</i>
+					<i>
+						<b>
+							Veuillez vous
+							<a href="{{ path('app_login') }}">connecter</a>
+							pour ajouter un commentaire.
+						</b>
+					</i>
 				</p>
 			{% endif %}
-		</div>
+		</p>
 	</div>
-	<div class="row justify-content-center">
-		<div class="col-md-6">
-			{% if comments.items %}
-				{% for comment in comments %}
-					{% set avatar = comment.user.avatar ?? 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' %}
-					<div class="d-flex mt-4">
-						<div class="flex-shrink-0"><img class="rounded-circle" src="{{ avatar }}" alt=""/></div>
-						<div class="w-100 mx-3">
-							<div class="fw-bold">{{ comment.user.username }}</div>
-							{{ comment.message }}
-						</div>
-						<div class="d-flex justify-content-end">
-							{{ comment.getCreatedAt().format('d/m/Y') }}
-						</div>
+</div>
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		{% if comments.items %}
+			{% for comment in comments %}
+				{% set avatar = comment.user.avatar ?? 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' %}
+				<div class="comment border-bottom d-flex py-3">
+					<div class="flex-shrink-0"><img class="rounded-circle" src="{{ avatar }}" alt=""/></div>
+					<div class="w-100 mx-3">
+						<div class="fw-bold">{{ comment.user.username }}</div>
+						{{ comment.message }}
 					</div>
-				{% endfor %}
-			{% else %}
-				<div class="w-100 text-center">
-					<p class="my-4">
-						<i>Pas encore de commentaires.</i>
-					</p>
+					<div class="d-flex justify-content-end">
+						{{ comment.getCreatedAt().format('d/m/Y') }}
+					</div>
 				</div>
-			{% endif %}
-		</div>
+			{% endfor %}
+		{% else %}
+			<div class="w-100 text-center">
+				<p class="my-4">
+					<i>Pas encore de commentaires.</i>
+				</p>
+			</div>
+		{% endif %}
 	</div>
-	<div class="row mt-4">
-		<div class="col-md-12 d-flex justify-content-center">
-			{{ knp_pagination_render(comments) }}
-		</div>
+</div>
+<div class="row mt-4">
+	<div class="col-md-12 d-flex justify-content-center">
+		{{ knp_pagination_render(comments) }}
 	</div>
-{% endblock %}
+</div>{% endblock %}

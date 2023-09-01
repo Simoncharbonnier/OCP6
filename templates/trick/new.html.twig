@@ -4,26 +4,65 @@
 	SnowTricks | Nouvelle figure
 {% endblock %}
 
+{% block javascripts %}
+	<script src="/assets/js/add-trick.js"></script>
+{% endblock %}
+
 {% block body %}
 	<div class="row justify-content-center">
-		<div class="col-md-8 d-flex justify-content-center py-4">
+		<div class="col-md-8 d-flex justify-content-center py-4" id="trick-form-wrapper">
 			{{ form_start(trickForm) }}
-			<div class="form-floating mb-3">
-				{{ form_widget(trickForm.name) }}
-				{{ form_label(trickForm.name) }}
-				{{ form_errors(trickForm.name) }}
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-floating mb-3">
+						{{ form_widget(trickForm.name) }}
+						{{ form_label(trickForm.name) }}
+						{{ form_errors(trickForm.name) }}
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="mb-3">
+						{{ form_widget(trickForm.collection) }}
+						{{ form_label(trickForm.collection) }}
+						{{ form_errors(trickForm.collection) }}
+					</div>
+				</div>
 			</div>
-			<div class="form-floating mb-3">
-				{{ form_widget(trickForm.description) }}
-				{{ form_label(trickForm.description) }}
-				{{ form_errors(trickForm.description) }}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-floating mb-3">
+						{{ form_widget(trickForm.description) }}
+						{{ form_label(trickForm.description) }}
+						{{ form_errors(trickForm.description) }}
+					</div>
+				</div>
 			</div>
-			<div class="form-floating mb-3">
-				{{ form_widget(trickForm.collection) }}
-				{{ form_label(trickForm.collection) }}
-				{{ form_errors(trickForm.collection) }}
+			<div class="row">
+				<div class="col-md-6">
+					<div id="add-image" class="btn btn-secondary">Ajouter une image</div>
+					<div class="images mb-3">
+						{{ form_widget(trickForm.images) }}
+						{{ form_label(trickForm.images) }}
+						{{ form_errors(trickForm.images) }}
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="d-flex justify-content-between align-items-center">
+						<input type="text" id="video-input" class="form-control" placeholder="Entrer le lien d'une vidéo">
+						<div id="add_video" class="icon disabled">
+							<img src="/assets/img/icons/add.svg" alt="add">
+						</div>
+					</div>
+					<div class="videos mb-3">
+						{{ form_widget(trickForm.videos) }}
+						{{ form_label(trickForm.videos) }}
+						{{ form_errors(trickForm.videos) }}
+					</div>
+				</div>
 			</div>
-			<div class="d-grid">
+
+			<div class="d-flex justify-content-between mt-5">
+				<a class="btn btn-danger no-deco" href="{{ path('app_home') }}">Annuler et revenir à l'accueil</a>
 				<button class="btn btn-primary" id="submitButton" type="submit">Ajouter la figure</button>
 			</div>
 			{{ form_end(trickForm) }}

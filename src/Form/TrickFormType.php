@@ -6,6 +6,8 @@ use App\Entity\Trick;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -32,8 +34,7 @@ class TrickFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Entrez la description',
-                    'cols' => 50,
-                    'rows' => 3
+                    'rows' => 6
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -41,14 +42,32 @@ class TrickFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('collection', TextType::class, [
-                'label' => 'Groupe',
+            ->add('collection', ChoiceType::class, [
+                'label' => false,
                 'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Entrez le groupe'
+                    'class' => 'form-control'
+                ],
+                'choices' => [
+                    'Groupe de la figure' => null,
+                    'Group 1' => 1,
+                    'Group 2' => 2,
+                    'Group 3' => 3
                 ]
             ])
-        ;
+            ->add('images', CollectionType::class, [
+                'entry_type' => ImageFormType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true,
+                'label' => false
+            ])
+            ->add('videos', CollectionType::class, [
+                'entry_type' => VideoFormType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true,
+                'label' => false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

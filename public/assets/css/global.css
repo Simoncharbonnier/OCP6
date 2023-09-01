@@ -62,6 +62,10 @@ a:hover {
     color: inherit;
 }
 
+a.no-deco:hover {
+    text-decoration: none;
+}
+
 .icon {
     transition: all .5s;
 }
@@ -69,6 +73,15 @@ a:hover {
 .icon:hover {
     cursor: pointer;
     opacity: .6;
+}
+
+.icon.disabled {
+    opacity: .4;
+}
+
+.icon.disabled:hover {
+    cursor: auto;
+    opacity: .4;
 }
 
 .col-5ths {
@@ -88,9 +101,14 @@ a:hover {
     color: inherit;
 }
 
+.row-img-vid .wrapper {
+    padding: 0;
+}
+
 .row-img-vid img,
-.row-img-vid video {
-    max-width: inherit;
+.row-img-vid iframe {
+    width: 100%;
+    height: 100%;
 }
 
 .border-bottom {
@@ -110,4 +128,31 @@ a:hover {
 
 textarea {
     height: auto !important;
+}
+
+#trick-form-wrapper form {
+    width: 100%;
+}
+
+#trick-form-wrapper form select {
+    height: calc(3.5rem + 2px);
+}
+
+#trick-form-wrapper form .icon {
+    width: 25px;
+}
+
+#add_video {
+    margin: 0 .5rem;
+}
+
+.images .wrapper,
+.videos .wrapper {
+    padding: 0;
+}
+
+.images img,
+.videos iframe {
+    width: 100%;
+    height: 100%;
 }
