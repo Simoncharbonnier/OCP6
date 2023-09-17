@@ -49,10 +49,11 @@ class TrickFormType extends AbstractType
                 ],
                 'choices' => [
                     'Groupe de la figure' => null,
-                    'Group 1' => 1,
-                    'Group 2' => 2,
-                    'Group 3' => 3
-                ]
+                    'Group 1' => '1',
+                    'Group 2' => '2',
+                    'Group 3' => '3'
+                ],
+                'data' => $options['data']->getCollection() ?? null
             ])
             ->add('images', CollectionType::class, [
                 'entry_type' => ImageFormType::class,

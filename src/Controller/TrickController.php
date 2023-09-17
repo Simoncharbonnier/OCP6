@@ -81,6 +81,7 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($trick);
             $trick->setUser($this->getUser());
             $trick->setCreatedAt(new DateTimeImmutable('now'));
             $trick->setUpdatedAt(new DateTimeImmutable('now'));
@@ -89,9 +90,12 @@ class TrickController extends AbstractController
                 $counter = 0;
                 foreach ($trick->getImages() as $image) {
                     $image->setTrick($trick);
-                    $imageName = $trick->getName().'-'.$counter.'.jpg';
+                    $imageName = $trick->getSlug().'-'.$counter.'.jpg';
 
-                    if (move_uploaded_file($image->getName(), 'assets/img/tricks/'.$imageName) === TRUE) {
+                    if ($image->getName()) {
+                        $imageData = base64_decode(preg_replace('/^data:image\/(png|jpg|jpeg);base64,/', '', $image->getName()));
+                        file_put_contents('assets/img/tricks/'.$imageName, $imageData);
+
                         $image->setName($imageName);
                         $entityManager->persist($image);
                         $counter++;
@@ -144,18 +148,56 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('app_trick', [ 'slug' => $slug ]);
         }
 
+        $imageCount = count($trick->getImages());
         $form = $this->createForm(TrickFormType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($trick);die;
             $trick->setUpdatedAt(new DateTimeImmutable('now'));
+
+            if ($trick->getImages()) {
+                $newImageCount = 0;
+                for ($i = 0; $i <= $imageCount - 1; $i++) {
+                    $oldImageName = $trick->getSlug().'-'.$i.'.jpg';
+                    $imageName = $trick->getSlug().'-'.$newImageCount.'.jpg';
+
+                    if (isset($trick->getImages()[$i])) {
+                        $image = $trick->getImages()[$i];
+
+                        if (preg_match('/'.$trick->getSlug().'/', $image->getName()) === 0) {
+                            $imageData = base64_decode(preg_replace('/^data:image\/(png|jpg|jpeg);base64,/', '', $image->getName()));
+
+                            file_put_contents('assets/img/tricks/'.$imageName, $imageData);
+                            $image->setName($imageName);
+                            $entityManager->persist($image);
+
+                            if ($i !== $newImageCount && (file_exists('assets/img/tricks/'.$oldImageName))) {
+                                unlink('assets/img/tricks/'.$oldImageName);
+                            }
+                        } else if ($image->getName() !== $imageName) {
+                            rename('assets/img/tricks/'.$image->getName(), 'assets/img/tricks/'.$imageName);
+                            $image->setName($imageName);
+                            $entityManager->persist($image);
+                        }
+
+                        $newImageCount++;
+                    } else if (file_exists('assets/img/tricks/'.$oldImageName)) {
+                        unlink('assets/img/tricks/'.$oldImageName);
+                    }
+                }
+            }
+
+            if ($trick->getVideos()) {
+                foreach ($trick->getVideos() as $video) {
+                    $entityManager->persist($video);
+                }
+            }
 
             $entityManager->persist($trick);
             $entityManager->flush();
 
             $this->addFlash('success', 'Figure modifiée.');
-            return $this->redirectToRoute('app_trick', [ 'slug' => $slug ]);
+            return $this->redirectToRoute('app_trick', [ 'slug' => $trick->getSlug() ]);
         }
 
         return $this->render('trick/edit.html.twig', [

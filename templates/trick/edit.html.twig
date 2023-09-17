@@ -1,32 +1,157 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	SnowTricks | Modifier la figure
+	SnowTricks |
+	{{ trick.name }}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/assets/js/edit-trick.js"></script>
+{% endblock %}
+
+{% block banner %}
+	{% set bannerImage = trick.images.first() ? '/assets/img/tricks/' ~ trick.images.first().name : '/assets/img/snowtricks_banner.jpg' %}
+
+	<style>
+		.banner {
+			background-image: url({{ bannerImage }});
+		}
+	</style>
+
+	{{ form_start(trickForm) }}
+
+	<div class="banner">
+		<div class="container h-100">
+			<div class="row align-items-center justify-content-center h-100">
+				<div class="col-md-4 text-center">
+					<h1 class="display-5 fw-bolder text-white">
+						<div class="no-label mb-3">
+							{{ form_widget(trickForm.name) }}
+							{{ form_label(trickForm.name) }}
+							{{ form_errors(trickForm.name) }}
+						</div>
+					</h1>
+				</div>
+			</div>
+		</div>
+		{% if trick.images %}
+			<div class="icons">
+				<div class="icon banner-icon" data-action="edit">
+					<img src="/assets/img/icons/edit.svg" alt="edit">
+				</div>
+				<div class="icon banner-icon" data-action="delete" data-bs-toggle="modal" data-bs-target="#modal-delete">
+					<img src="/assets/img/icons/delete.svg" alt="delete">
+				</div>
+			</div>
+		{% endif %}
+	</div>
 {% endblock %}
 
 {% block body %}
-	<div class="row justify-content-center">
-		<div class="col-md-8 d-flex justify-content-center py-4">
-			{{ form_start(trickForm) }}
-			<div class="form-floating mb-3">
-				{{ form_widget(trickForm.name) }}
-				{{ form_label(trickForm.name) }}
-				{{ form_errors(trickForm.name) }}
+	<div class="row row-img-vid justify-content-center">
+		{% if trick.images %}
+			{% for index, image in trick.images %}
+				{% if index is not same as 0 %}
+					<div class="container-image" data="image" data-input="trick_form_images_{{ index }}_name" id="container_trick_form_images_{{ index }}_name">
+						<div class="wrapper d-flex align-items-center m-3" style="width: 18rem; height: 162px;">
+							<img src="/assets/img/tricks/{{ image.name }}" alt="{{ trick.name }}">
+						</div>
+						<div class="icons d-flex justify-content-end m-3" style="width: 18rem;">
+							<div class="icon" data-action="edit">
+								<img src="/assets/img/icons/edit.svg" alt="edit">
+							</div>
+							<div class="icon" data-action="delete" data-bs-toggle="modal" data-bs-target="#modal-delete">
+								<img src="/assets/img/icons/delete.svg" alt="delete">
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+			<div class="images d-none mb-3">
+				{{ form_widget(trickForm.images) }}
+				{{ form_label(trickForm.images) }}
+				{{ form_errors(trickForm.images) }}
 			</div>
+		{% endif %}
+		{% if trick.videos %}
+			{% for index, video in trick.videos %}
+				<div class="container-video" data="video" data-input="trick_form_videos_{{ index }}_name" id="container_trick_form_videos_{{ index }}_name">
+					<div class=" wrapper d-flex align-items-center m-3" style=" width: 18rem; height: 162px;">
+						<iframe src="https://www.youtube.com/embed/{{ video.name }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</div>
+					<div class="icons d-flex justify-content-end m-3" style="width: 18rem;">
+						<div class="icon" data-action="edit" data-bs-toggle="modal" data-bs-target="#modal-edit-video">
+							<img src="/assets/img/icons/edit.svg" alt="edit">
+						</div>
+						<div class="icon" data-action="delete" data-bs-toggle="modal" data-bs-target="#modal-delete">
+							<img src="/assets/img/icons/delete.svg" alt="delete">
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			<div class="videos d-none mb-3">
+				{{ form_widget(trickForm.videos) }}
+				{{ form_label(trickForm.videos) }}
+				{{ form_errors(trickForm.videos) }}
+			</div>
+			<div class="modal fade" id="modal-edit-video" tabindex="-1" aria-labelledby="modal-edit-video-label" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modal-edit-video-label">Modification d'une vidéo</h5>
+							<button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body text-center">
+							<input type="text" class="form-control" placeholder="Entrer le lien d'une vidéo">
+						</div>
+						<div class="modal-footer">
+							<p class="btn btn-secondary close-modal" data-bs-dismiss="modal">Annuler</p>
+							<p class="btn btn-primary btn-validate close-modal" data-bs-dismiss="modal">Valider</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+		<div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="modal-delete-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modal-delete-label">Suppression</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body text-center">
+						<p>Êtes-vous certain de vouloir supprimer cet élément ?</p>
+					</div>
+					<div class="modal-footer">
+						<p class="btn btn-secondary" data-bs-dismiss="modal">Annuler</p>
+						<p class="btn btn-danger btn-delete" data-bs-dismiss="modal">Supprimer</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center mt-5">
+		<div class="col-md-8">
 			<div class="form-floating mb-3">
 				{{ form_widget(trickForm.description) }}
 				{{ form_label(trickForm.description) }}
 				{{ form_errors(trickForm.description) }}
 			</div>
-			<div class="form-floating mb-3">
-				{{ form_widget(trickForm.collection) }}
-				{{ form_label(trickForm.collection) }}
-				{{ form_errors(trickForm.collection) }}
-			</div>
-			<div class="d-grid">
-				<button class="btn btn-primary" id="submitButton" type="submit">Sauvegarder</button>
-			</div>
-			{{ form_end(trickForm) }}
 		</div>
 	</div>
-{% endblock %}
+	<div class="row justify-content-center py-4">
+		<div class="col-md-4">
+			{{ form_widget(trickForm.collection) }}
+			{{ form_label(trickForm.collection) }}
+			{{ form_errors(trickForm.collection) }}
+		</div>
+		<div class="col-md-1"></div>
+		<div class="col-md-3">
+			<div class="d-flex justify-content-between">
+				<a class="btn btn-danger no-deco" href="{{ path('app_home') }}">Supprimer la figure</a>
+				<button class="btn btn-primary" id="submitButton" type="submit">Sauvegarder</button>
+			</div>
+		</div>
+	</div>
+</div>
+{{ form_end(trickForm) }}{% endblock %}

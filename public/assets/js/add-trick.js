@@ -6,6 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Add images
+    const imagesContainer = document.getElementById('trick_form_images');
+
+    let imageNumber = 0;
+    document.getElementById('add_image').addEventListener('click', function () {
+        addImage(imageNumber);
+        imageNumber++;
+    })
+
     function addImage(n) {
         const container = document.createElement('div');
         container.classList.add(`container-image-${n}`, 'd-flex', 'align-items-center');
@@ -16,9 +24,14 @@ document.addEventListener("DOMContentLoaded", () => {
         inputContainer.classList.add('d-none');
         container.appendChild(inputContainer);
 
-        const input = inputContainer.querySelector('input');
-        input.addEventListener('change', function () {
-            const file = input.files[0];
+        const inputFile = document.createElement('input');
+        inputFile.type = 'file';
+        inputFile.classList.add('d-none');
+        container.appendChild(inputFile);
+
+        const inputText = inputContainer.querySelector('input');
+        inputFile.addEventListener('change', function () {
+            const file = inputFile.files[0];
             const reader = new FileReader();
             reader.readAsDataURL(file);
 
@@ -43,24 +56,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.querySelector(`.container-image-${imageNumber}`).remove();
                 })
                 container.appendChild(deleteIcon);
+
+                inputText.value = reader.result;
             }
         });
 
-        click(input);
+        click(inputFile);
     }
 
-    document.getElementById('submitButton').addEventListener('click', function (e) {
-        e.preventDefault;
-        console.log(document.getElementById('trick_form_images_0_name').files);
-    })
-
-    const imagesContainer = document.getElementById('trick_form_images');
-
-    let imageNumber = 0;
-    document.getElementById('add-image').addEventListener('click', function () {
-        addImage(imageNumber);
-        imageNumber++;
-    })
 
     // Add videos
     const videosContainer = document.getElementById('trick_form_videos');
@@ -123,5 +126,4 @@ document.addEventListener("DOMContentLoaded", () => {
             addVideoBtn.classList.add('disabled');
         }
     })
-
 });

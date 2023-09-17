@@ -24,12 +24,12 @@
 		</div>
 		{% if app.user is same as trick.user %}
 			<div class="icons">
-				<div class="icon">
+				<a class="icon" href="{{ path('app_trick_edit', { 'slug': trick.slug }) }}">
 					<img src="/assets/img/icons/edit.svg" alt="edit">
-				</div>
-				<div class="icon">
+				</a>
+				<a class="icon" href="">
 					<img src="/assets/img/icons/delete.svg" alt="delete">
-				</div>
+				</a>
 			</div>
 		{% endif %}
 	</div>
@@ -38,10 +38,12 @@
 {% block body %}
 	<div class="row row-img-vid justify-content-center">
 		{% if trick.images %}
-			{% for image in trick.images %}
-				<div class="wrapper d-flex align-items-center m-3" style="width: 18rem; height: 162px;">
-					<img src="/assets/img/tricks/{{ image.name }}" alt="{{ trick.name }}">
-				</div>
+			{% for index, image in trick.images %}
+				{% if index is not same as 0 %}
+					<div class="wrapper d-flex align-items-center m-3" style="width: 18rem; height: 162px;">
+						<img src="/assets/img/tricks/{{ image.name }}" alt="{{ trick.name }}">
+					</div>
+				{% endif %}
 			{% endfor %}
 		{% endif %}
 		{% if trick.videos %}

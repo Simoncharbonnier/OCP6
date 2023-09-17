@@ -14,7 +14,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(TrickRepository $trickRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $tricks = $trickRepository->findBy([], ['created_at' => 'DESC']);
+        $tricks = $trickRepository->findBy([], ['id' => 'DESC']);
 
         if (empty($tricks)) {
             $this->addFlash('danger', 'Il n\'y a pas de figures disponibles.');
