@@ -81,7 +81,6 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($trick);
             $trick->setUser($this->getUser());
             $trick->setCreatedAt(new DateTimeImmutable('now'));
             $trick->setUpdatedAt(new DateTimeImmutable('now'));
@@ -156,6 +155,12 @@ class TrickController extends AbstractController
             $trick->setUpdatedAt(new DateTimeImmutable('now'));
 
             if ($trick->getImages()) {
+                $newImage = false;
+                if ($imageCount === 0) {
+                    $imageCount = 1;
+                    $newImage = true;
+                }
+
                 $newImageCount = 0;
                 for ($i = 0; $i <= $imageCount - 1; $i++) {
                     $oldImageName = $trick->getSlug().'-'.$i.'.jpg';
@@ -164,11 +169,13 @@ class TrickController extends AbstractController
                     if (isset($trick->getImages()[$i])) {
                         $image = $trick->getImages()[$i];
 
-                        if (preg_match('/'.$trick->getSlug().'/', $image->getName()) === 0) {
+                        if (preg_match('/^data:image\/(png|jpg|jpeg);base64,/', $image->getName()) === 1) {
                             $imageData = base64_decode(preg_replace('/^data:image\/(png|jpg|jpeg);base64,/', '', $image->getName()));
-
                             file_put_contents('assets/img/tricks/'.$imageName, $imageData);
                             $image->setName($imageName);
+                            if ($newImage) {
+                                $image->setTrick($trick);
+                            }
                             $entityManager->persist($image);
 
                             if ($i !== $newImageCount && (file_exists('assets/img/tricks/'.$oldImageName))) {

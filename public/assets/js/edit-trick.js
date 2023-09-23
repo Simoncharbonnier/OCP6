@@ -13,9 +13,18 @@ document.addEventListener("DOMContentLoaded", () => {
             if (bannerImage) {
                 container = document.querySelector('.banner');
             }
-            const input = bannerImage ? document.querySelector('.images input') : document.getElementById(container.getAttribute('data-input'));
+            let input = bannerImage ? document.querySelector('.images input') : document.getElementById(container.getAttribute('data-input'));
+
             if (action === 'edit') {
                 if (bannerImage || container.getAttribute('data') === 'image') {
+                    if (input === null) {
+                        const inputContainer = document.createElement('div');
+                        inputContainer.innerHTML = document.getElementById('trick_form_images').getAttribute('data-prototype').replace(/__name__/g, 0);
+                        inputContainer.classList.add('d-none');
+                        document.querySelector('.images').appendChild(inputContainer);
+                        input = inputContainer.querySelector('input');
+                    }
+
                     const inputFile = document.createElement('input');
                     inputFile.type = 'file';
                     inputFile.classList.add('d-none');
@@ -29,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         reader.onloadend = function () {
                             if (bannerImage) {
                                 container.style.backgroundImage = "url('" + reader.result + "')";
+                                document.querySelector('.banner .icons .delete').classList.remove('d-none');
                             } else {
                                 container.querySelector('img').src = reader.result;
                             }
@@ -88,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 imageValue = value.match(/\.jpg$/) ? '/assets/img/tricks/' + value : value;
             } else {
                 imageValue = '/assets/img/snowtricks_banner.jpg';
-                document.querySelector('.banner .icons').classList.add('d-none');
+                document.querySelector('.banner .icons .delete').classList.add('d-none');
             }
 
             container.style.backgroundImage = "url('" + imageValue + "')";

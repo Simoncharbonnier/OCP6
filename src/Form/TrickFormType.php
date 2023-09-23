@@ -3,11 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Trick;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -42,18 +43,14 @@ class TrickFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('collection', ChoiceType::class, [
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
                 'label' => false,
                 'attr' => [
                     'class' => 'form-control'
                 ],
-                'choices' => [
-                    'Groupe de la figure' => null,
-                    'Group 1' => '1',
-                    'Group 2' => '2',
-                    'Group 3' => '3'
-                ],
-                'data' => $options['data']->getCollection() ?? null
+                'data' => $options['data']->getCategory() ?? null
             ])
             ->add('images', CollectionType::class, [
                 'entry_type' => ImageFormType::class,

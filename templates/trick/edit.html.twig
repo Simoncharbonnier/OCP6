@@ -34,16 +34,14 @@
 				</div>
 			</div>
 		</div>
-		{% if trick.images %}
-			<div class="icons">
-				<div class="icon banner-icon" data-action="edit">
-					<img src="/assets/img/icons/edit.svg" alt="edit">
-				</div>
-				<div class="icon banner-icon" data-action="delete" data-bs-toggle="modal" data-bs-target="#modal-delete">
-					<img src="/assets/img/icons/delete.svg" alt="delete">
-				</div>
+		<div class="icons">
+			<div class="icon banner-icon edit" data-action="edit">
+				<img src="/assets/img/icons/edit.svg" alt="edit">
 			</div>
-		{% endif %}
+			<div class="icon banner-icon delete {{ trick.images.first() ? '' : 'd-none' }}" data-action="delete" data-bs-toggle="modal" data-bs-target="#modal-delete">
+				<img src="/assets/img/icons/delete.svg" alt="delete">
+			</div>
+		</div>
 	</div>
 {% endblock %}
 
@@ -141,9 +139,9 @@
 	</div>
 	<div class="row justify-content-center py-4">
 		<div class="col-md-4">
-			{{ form_widget(trickForm.collection) }}
-			{{ form_label(trickForm.collection) }}
-			{{ form_errors(trickForm.collection) }}
+			{{ form_widget(trickForm.category) }}
+			{{ form_label(trickForm.category) }}
+			{{ form_errors(trickForm.category) }}
 		</div>
 		<div class="col-md-1"></div>
 		<div class="col-md-3">

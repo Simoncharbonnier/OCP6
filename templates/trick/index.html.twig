@@ -73,9 +73,9 @@
 					{{ trick.getUpdatedAt().format('d/m/Y') }}
 				</div>
 			{% endif %}
-			{% if trick.collection %}
+			{% if trick.category %}
 				<div class="card-info">
-					{{ trick.collection }}
+					{{ trick.category.name }}
 				</div>
 			{% endif %}
 		</div>

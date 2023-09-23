@@ -20,7 +20,7 @@ class Trick
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    #[ORM\ManyToOne(inversedBy: 'tricks', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
@@ -33,8 +33,9 @@ class Trick
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $collection = null;
+    #[ORM\ManyToOne(inversedBy: 'tricks', fetch: 'EAGER')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Category $category = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
@@ -105,14 +106,14 @@ class Trick
         return $this;
     }
 
-    public function getCollection(): ?string
+    public function getCategory(): ?Category
     {
-        return $this->collection;
+        return $this->category;
     }
 
-    public function setCollection(?string $collection): static
+    public function setCategory(?Category $category): static
     {
-        $this->collection = $collection;
+        $this->category = $category;
 
         return $this;
     }
