@@ -27,9 +27,9 @@
 				<a class="icon" href="{{ path('app_trick_edit', { 'slug': trick.slug }) }}">
 					<img src="/assets/img/icons/edit.svg" alt="edit">
 				</a>
-				<a class="icon" href="">
+				<div class="icon" data-bs-toggle="modal" data-bs-target="#modal-delete-trick">
 					<img src="/assets/img/icons/delete.svg" alt="delete">
-				</a>
+				</div>
 			</div>
 		{% endif %}
 	</div>
@@ -135,5 +135,25 @@
 <div class="row mt-4">
 	<div class="col-md-12 d-flex justify-content-center">
 		{{ knp_pagination_render(comments) }}
+	</div>
+</div>
+<div class="modal fade" id="modal-delete-trick" tabindex="-1" aria-labelledby="modal-delete-trick-label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modal-delete-trick-label">Suppression</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body text-center">
+				<p>Êtes-vous certain de vouloir supprimer cette figure ?</p>
+				<span>{{ trick.name }}</span>
+			</div>
+			<div class="modal-footer">
+				<p class="btn btn-secondary" data-bs-dismiss="modal">Annuler</p>
+				<a class="btn btn-danger text-decoration-none" href="{{ path('app_trick_delete', { 'slug': trick.slug }) }}">
+					Supprimer
+				</a>
+			</div>
+		</div>
 	</div>
 </div>{% endblock %}

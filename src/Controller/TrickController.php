@@ -212,4 +212,37 @@ class TrickController extends AbstractController
             'trickForm' => $form->createView()
         ]);
     }
+
+    #[Route('/supprimer-figure/{slug}', name: 'app_trick_delete')]
+    public function delete(
+        string $slug,
+        TrickRepository $trickRepository,
+        EntityManagerInterface $entityManager
+    ): Response
+    {
+        $trick = $trickRepository->findBy(['slug' => $slug]);
+
+        if (empty($trick)) {
+            $this->addFlash('danger', 'Cette figure n\'existe pas.');
+            return $this->redirectToRoute('app_home');
+        }
+        $trick = $trick[0];
+
+        if (!$this->getUser() || $this->getUser() !== $trick->getUser()) {
+            $this->addFlash('danger', 'Vous n\'avez pas les permissions.');
+            return $this->redirectToRoute('app_trick', [ 'slug' => $slug ]);
+        }
+
+        if ($trick->getImages()) {
+            foreach ($trick->getImages() as $image) {
+                unlink('assets/img/tricks/'.$image->getName());
+            }
+        }
+
+        $entityManager->remove($trick);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'La figure a été supprimée.');
+        return $this->redirectToRoute('app_home');
+    }
 }
