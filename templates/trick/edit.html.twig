@@ -146,8 +146,28 @@
 		<div class="col-md-1"></div>
 		<div class="col-md-3">
 			<div class="d-flex justify-content-between">
-				<a class="btn btn-danger no-deco" href="{{ path('app_home') }}">Supprimer la figure</a>
+				<div class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-trick">Supprimer la figure</div>
 				<button class="btn btn-primary" id="submitButton" type="submit">Sauvegarder</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="modal-delete-trick" tabindex="-1" aria-labelledby="modal-delete-trick-label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modal-delete-trick-label">Suppression</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body text-center">
+				<p>Êtes-vous certain de vouloir supprimer cette figure ?</p>
+				<span>{{ trick.name }}</span>
+			</div>
+			<div class="modal-footer">
+				<p class="btn btn-secondary" data-bs-dismiss="modal">Annuler</p>
+				<a class="btn btn-danger text-decoration-none" href="{{ path('app_trick_delete', { 'slug': trick.slug }) }}">
+					Supprimer
+				</a>
 			</div>
 		</div>
 	</div>
