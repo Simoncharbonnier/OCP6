@@ -22,4 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
             counter++;
         })
     }
+
+    // Arrow down
+    function getHeightScroll(el) {
+        const rect = el.getBoundingClientRect();
+        return rect.top + window.scrollY;
+    }
+    const arrowDown = document.querySelector('.banner .down');
+    if (arrowDown) {
+        arrowDown.addEventListener('click', function () {
+            const row = document.querySelector('.row-tricks');
+            window.scroll({ top: getHeightScroll(row) - 50, behavior: 'smooth' });
+        })
+    }
 });
