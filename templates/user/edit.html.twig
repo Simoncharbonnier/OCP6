@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	SnowTricks |
+	{{ user.username }}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/assets/js/user.js"></script>
+{% endblock %}
+
+{% block body %}
+	<div class="row my-5">
+		<div class="col-md-12 d-flex justify-content-center align-items-center">
+			<div class="d-flex align-items-center">
+				{% set avatar = user.avatar ? '/assets/img/users/' ~ user.avatar : 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' %}
+				<div class="flex-shrink-0 mr-3 avatar edit"><img class="rounded-circle" src="{{ avatar }}" alt="{{ user.username }} avatar"/></div>
+				<h1 class="mb-0">Modifier le profil</h1>
+			</div>
+		</div>
+	</div>
+	{{ form_start(userForm) }}
+	<div class="row mb-3 justify-content-center">
+		<div class="col-md-4">
+			{{ form_widget(userForm.username) }}
+			{{ form_label(userForm.username) }}
+			{{ form_errors(userForm.username) }}
+		</div>
+	</div>
+	<div class="row mb-3 justify-content-center">
+		<div class="col-md-4">
+			{{ form_widget(userForm.plainPassword) }}
+			{{ form_label(userForm.plainPassword) }}
+			{{ form_errors(userForm.plainPassword) }}
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-md-4 justify-content-center mt-3">
+			<div class="d-flex justify-content-between">
+				<a href="{{ path('app_user', { 'username': user.username }) }}" class="btn btn-secondary no-deco">Retour au profil</a>
+				<button class="btn btn-primary" type="submit">Sauvegarder</button>
+			</div>
+		</div>
+	</div>
+	<div class="d-none">
+		<div class="avatar-input-text">
+			{{ form_widget(userForm.avatar) }}
+			{{ form_label(userForm.avatar) }}
+			{{ form_errors(userForm.avatar) }}
+		</div>
+		<input id="avatar-input-file" type="file" name="avatarFile">
+	</div>
+
+	{{ form_end(userForm) }}
+{% endblock %}

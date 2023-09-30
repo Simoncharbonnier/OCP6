@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
+use App\Form\UserFormType;
 
 class UserController extends AbstractController
 {
@@ -34,6 +35,7 @@ class UserController extends AbstractController
     public function edit(
         string $username,
         UserRepository $userRepository,
+        EntityManagerInterface $entityManager,
         Request $request
     ): Response
     {
@@ -50,8 +52,33 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user', [ 'username' => $username ]);
         }
 
+        $issetAvatar = $user->getAvatar() !== null;
+        $form = $this->createForm(UserFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('plainPassword')->getData()) {
+
+            }
+
+            if (preg_match('/^data:image\/(png|jpg|jpeg);base64,/', $user->getAvatar()) === 1) {
+                $avatarData = base64_decode(preg_replace('/^data:image\/(png|jpg|jpeg);base64,/', '', $user->getAvatar()));
+                file_put_contents('assets/img/users/'.$user->getId().'.jpg', $avatarData);
+                $user->setAvatar($user->getId().'.jpg');
+            } else if ($user->getAvatar() === null && $issetAvatar) {
+                unlink('assets/img/users/'.$user->getId().'.jpg');
+            }
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Profil modifié.');
+            return $this->redirectToRoute('app_user', [ 'username' => $user->getUsername() ]);
+        }
+
         return $this->render('user/edit.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'userForm' => $form->createView()
         ]);
     }
 }
