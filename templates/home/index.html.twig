@@ -41,11 +41,11 @@
 								<a class="icon text-decoration-none" href="{{ path('app_trick_edit', { 'slug': trick.slug }) }}">
 									<img src="/assets/img/icons/edit.svg" alt="edit">
 								</a>
-								<div class="icon text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal-delete-trick">
+								<div class="icon text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal-delete-trick-{{ trick.slug }}">
 									<img src="/assets/img/icons/delete.svg" alt="delete">
 								</div>
 							</div>
-							<div class="modal fade" id="modal-delete-trick" tabindex="-1" aria-labelledby="modal-delete-trick-label" aria-hidden="true">
+							<div class="modal fade" id="modal-delete-trick-{{ trick.slug }}" tabindex="-1" aria-labelledby="modal-delete-trick-label" aria-hidden="true">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -71,9 +71,11 @@
 			</div>
 		{% endfor %}
 	</div>
-	<div class="row">
-		<div class="col-md-12 d-flex justify-content-center">
-			{{ knp_pagination_render(tricks) }}
+	{% if tricks %}
+		<div class="row">
+			<div class="col-md-12 d-flex justify-content-center">
+				{{ knp_pagination_render(tricks) }}
+			</div>
 		</div>
-	</div>
+	{% endif %}
 {% endblock %}

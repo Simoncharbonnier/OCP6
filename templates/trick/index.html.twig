@@ -115,8 +115,8 @@
 				<div class="comment border-bottom d-flex py-3">
 					<div class="flex-shrink-0"><img class="rounded-circle" src="{{ avatar }}" alt=""/></div>
 					<div class="w-100 mx-3">
-						<div class="fw-bold">{{ comment.user.username }}</div>
-						{{ comment.message }}
+						<a class="fw-bold" href="{{ path('app_user', { 'username': comment.user.username }) }}">{{ comment.user.username }}</a>
+						<p class="mb-0">{{ comment.message }}</p>
 					</div>
 					<div class="d-flex justify-content-end">
 						{{ comment.getCreatedAt().format('d/m/Y') }}

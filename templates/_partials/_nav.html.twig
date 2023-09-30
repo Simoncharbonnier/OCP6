@@ -17,6 +17,9 @@
 						<a class="nav-link" href="{{ path('app_trick_new') }}">Ajouter une figure</a>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_user', { 'username': app.user.username }) }}">Profil</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
 					</li>
 				{% else %}
