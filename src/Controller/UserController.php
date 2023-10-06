@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use App\Form\UserFormType;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
@@ -36,7 +37,8 @@ class UserController extends AbstractController
         string $username,
         UserRepository $userRepository,
         EntityManagerInterface $entityManager,
-        Request $request
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher
     ): Response
     {
         $user = $userRepository->findBy(['username' => $username]);
@@ -57,9 +59,12 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('plainPassword')->getData()) {
-
-            }
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
 
             if (preg_match('/^data:image\/(png|jpg|jpeg);base64,/', $user->getAvatar()) === 1) {
                 $avatarData = base64_decode(preg_replace('/^data:image\/(png|jpg|jpeg);base64,/', '', $user->getAvatar()));

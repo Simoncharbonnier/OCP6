@@ -38,6 +38,11 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
         $userRepository = new UserRepository($this->registry);
         $user = $userRepository->findOneBy(['username' => $username]);
+
+        if (!$user) {
+            throw new CustomUserMessageAuthenticationException('Le nom d\'utilisateur ne correspond à aucun compte.');
+        }
+
         if (!$user->isEnabled()) {
             throw new CustomUserMessageAuthenticationException('Veuillez activer votre compte en cliquant sur le lien reçu par mail avant de vous connecter.');
         }

@@ -12,7 +12,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\Criteria;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-#[UniqueEntity(fields: ['name', 'slug'])]
+#[UniqueEntity(fields: ['name', 'slug'], message: 'La figure existe déjà.')]
 class Trick
 {
     #[ORM\Id]
