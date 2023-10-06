@@ -218,3 +218,15 @@ textarea {
     opacity: .7;
     cursor: pointer;
 }
+
+.card-trick {
+    height: 250px;
+}
+
+.card-trick .card-img-top {
+    height: 60%;
+}
+
+.w-15 {
+    width: 15%;
+}
