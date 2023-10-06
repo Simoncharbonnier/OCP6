@@ -36,7 +36,8 @@ footer {
     right: 20px;
 }
 
-.banner .down img {
+.banner .down img,
+.up img {
     width: 50px;
 }
 
@@ -229,4 +230,14 @@ textarea {
 
 .w-15 {
     width: 15%;
+}
+
+.relative {
+    position: relative;
+}
+
+.icon.up {
+    position: absolute;
+    right: 10px;
+    top: 0;
 }

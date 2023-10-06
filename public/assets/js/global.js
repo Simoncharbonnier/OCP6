@@ -32,7 +32,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (arrowDown) {
         arrowDown.addEventListener('click', function () {
             const row = document.querySelector('.row-tricks');
-            window.scroll({ top: getHeightScroll(row) - 50, behavior: 'smooth' });
+            window.scroll({ top: getHeightScroll(row), behavior: 'smooth' });
+        })
+    }
+
+    // Arrow up
+    const arrowUp = document.querySelector('.icon.up');
+    if (arrowUp) {
+        arrowUp.addEventListener('click', function () {
+            window.scroll({ top: 0, behavior: 'smooth' });
         })
     }
 });

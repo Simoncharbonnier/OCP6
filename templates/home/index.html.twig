@@ -26,7 +26,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class="row row-tricks">
+	<div class="row row-tricks pt-4" id="tricks">
 		{% for trick in tricks %}
 			<div class="col-5ths mb-5">
 				<div class="card card-trick shadow border-0">
@@ -71,11 +71,14 @@
 			</div>
 		{% endfor %}
 	</div>
-	{% if tricks %}
-		<div class="row">
-			<div class="col-md-12 d-flex justify-content-center">
+	<div class="row">
+		<div class="col-md-12 d-flex justify-content-center relative">
+			{% if tricks %}
 				{{ knp_pagination_render(tricks) }}
+			{% endif %}
+			<div class="icon up">
+				<img src="/assets/img/icons/up.svg" alt="up">
 			</div>
 		</div>
-	{% endif %}
+	</div>
 {% endblock %}
