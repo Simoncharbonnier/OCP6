@@ -35,10 +35,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="row" id="tricks">
+	<div class="row justify-content-center" id="tricks">
 		{% if user.tricks.first() %}
 			{% for trick in user.tricks %}
-				<div class="col-5ths mb-5">
+				<div class="col-responsive mb-5">
 					<div class="card card-trick shadow border-0">
 						{% set trickImage = trick.images.first() ? '/assets/img/tricks/' ~ trick.images.first().name : '/assets/img/snowtricks_banner.jpg' %}
 						<img class="card-img-top" src="{{ trickImage }}" alt="Figure image"/>
@@ -81,7 +81,7 @@
 				</div>
 			{% endfor %}
 		{% else %}
-			<div class="col-md-10">
+			<div class="col-10 text-center">
 				<i>
 					{% if app.user is same as user %}
 						Vous n'avez créé aucune figure.
@@ -92,31 +92,33 @@
 			</div>
 		{% endif %}
 	</div>
-	<div class="row d-none" id="comments">
-		<div class="col-md-12">
+	<div class="row justify-content-center d-none" id="comments">
+		<div class="col-lg-8 col-10">
 			{% if user.comments.first() %}
 				{% for comment in user.comments %}
 					{% set avatar = comment.user.avatar ? '/assets/img/users/' ~ comment.user.avatar : 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' %}
 					<div class="comment border-bottom d-flex py-3">
-						<div class="flex-shrink-0 avatar"><img class="rounded-circle" src="{{ avatar }}" alt=""/></div>
 						<div class="w-100 mx-3">
-							<p class="fw-bold mb-0">{{ comment.user.username }}</p>
+							<div class="d-flex justify-content-between align-items-center">
+								<a class="fw-bold" href="{{ path('app_trick', { 'slug': comment.trick.slug }) }}">{{ comment.trick.name }}</a>
+								<p class="mb-0">
+									{{ comment.getCreatedAt().format('d/m/Y') }}
+								</p>
+							</div>
 							<p class="mb-0">{{ comment.message }}</p>
-						</div>
-						<div class="text-center w-15">
-							<p class="mb-0">{{ comment.getCreatedAt().format('d/m/Y') }}</p>
-							<a class="" href="{{ path('app_trick', { 'slug': comment.trick.slug }) }}">{{ comment.trick.name }}</a>
 						</div>
 					</div>
 				{% endfor %}
 			{% else %}
-				<i>
-					{% if app.user is same as user %}
-						Vous n'avez partagé aucun commentaire.
-					{% else %}
-						Cet utilisateur n'a partagé aucun commentaire.
-					{% endif %}
-				</i>
+				<div class="text-center">
+					<i>
+						{% if app.user is same as user %}
+							Vous n'avez partagé aucun commentaire.
+						{% else %}
+							Cet utilisateur n'a partagé aucun commentaire.
+						{% endif %}
+					</i>
+				</div>
 			{% endif %}
 		</div>
 	</div>

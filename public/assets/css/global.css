@@ -5,10 +5,6 @@ body {
     padding-bottom: 10vh;
 }
 
-nav {
-    height: 10vh;
-}
-
 footer {
     width: 100%;
     position: absolute;
@@ -24,7 +20,7 @@ footer {
 .banner {
     position: relative;
     width: 100%;
-    height: 90vh;
+    height: 95vh;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -84,7 +80,7 @@ a.no-deco:hover {
     opacity: .4;
 }
 
-.col-5ths {
+.col-responsive {
     width: 20%;
     padding-right: 15px;
     padding-left: 15px;
@@ -240,4 +236,38 @@ textarea {
     position: absolute;
     right: 10px;
     top: 0;
+}
+
+.row-btn-medias {
+    display: none;
+}
+
+.rg-10 {
+    row-gap: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+    .col-responsive {
+        width: 33%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .col-responsive {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .col-responsive {
+        width: 70%;
+    }
+
+    .row-img-vid {
+        display: none;
+    }
+
+    .row-btn-medias {
+        display: flex;
+    }
 }

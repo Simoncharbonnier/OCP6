@@ -43,4 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
             window.scroll({ top: 0, behavior: 'smooth' });
         })
     }
+
+    // Responsive medias
+    const btnMedias = document.querySelector('.row-btn-medias .btn');
+    if (btnMedias) {
+        btnMedias.addEventListener('click', function () {
+            document.querySelector('.row-img-vid').style.display = "flex";
+            btnMedias.closest('.row').classList.add('d-none');
+        })
+    }
 });

@@ -17,7 +17,7 @@
 	<div class="banner">
 		<div class="container h-100">
 			<div class="row align-items-center justify-content-center h-100">
-				<div class="col-md-10 text-center">
+				<div class="col-10 text-center">
 					<h1 class="display-5 fw-bolder text-white">{{ trick.name }}</h1>
 				</div>
 			</div>
@@ -37,32 +37,44 @@
 
 {% block body %}
 	<div class="row row-img-vid justify-content-center">
-		{% if trick.images %}
+		{% set medias = false %}
+		{% if trick.images.first() %}
 			{% for index, image in trick.images %}
 				{% if index is not same as 0 %}
 					<div class="wrapper d-flex align-items-center m-3" style="width: 18rem; height: 162px;">
 						<img src="/assets/img/tricks/{{ image.name }}" alt="{{ trick.name }}">
 					</div>
+					{% set medias = true %}
 				{% endif %}
 			{% endfor %}
 		{% endif %}
-		{% if trick.videos %}
+		{% if trick.videos.first() %}
 			{% for video in trick.videos %}
 				<div class="wrapper d-flex align-items-center m-3" style="width: 18rem; height: 162px;">
 					<iframe src="https://www.youtube.com/embed/{{ video.name }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
+				{% set medias = true %}
 			{% endfor %}
 		{% endif %}
 	</div>
+	{% if medias %}
+		<div class="row row-btn-medias justify-content-center">
+			<div class="col-10 d-flex justify-content-center">
+				<div class="btn btn-secondary">
+					Voir les images et vidéos
+				</div>
+			</div>
+		</div>
+	{% endif %}
 	<div class="row justify-content-center mt-5">
-		<div class="col-md-10">
+		<div class="col-10">
 			<p class="text-center">
 				{{ trick.description }}
 			</p>
 		</div>
 	</div>
 	<div class="row justify-content-center">
-		<div class="col-md-8 d-flex justify-content-center col-gap border-bottom py-4">
+		<div class="col-lg-6 col-10 d-flex justify-content-center col-gap border-bottom py-4">
 			<div class="card-info">
 				Créé le
 				{{ trick.getCreatedAt().format('d/m/Y') }}
@@ -81,7 +93,7 @@
 		</div>
 	</div>
 	<div class="row justify-content-center">
-		<div class="col-md-8 d-flex justify-content-center border-bottom py-4">
+		<div class="col-lg-6 col-10 d-flex justify-content-center text-center border-bottom py-4">
 			{% if app.user %}
 				{{ form_start(commentForm) }}
 				<div class="form-floating mb-3">
@@ -108,18 +120,20 @@
 	</div>
 </div>
 <div class="row justify-content-center">
-	<div class="col-md-6">
+	<div class="col-lg-6 col-10">
 		{% if comments.items %}
 			{% for comment in comments %}
 				{% set avatar = comment.user.avatar ? '/assets/img/users/' ~ comment.user.avatar : 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' %}
 				<div class="comment border-bottom d-flex py-3">
 					<div class="flex-shrink-0 avatar"><img class="rounded-circle" src="{{ avatar }}" alt=""/></div>
 					<div class="w-100 mx-3">
-						<a class="fw-bold" href="{{ path('app_user', { 'username': comment.user.username }) }}">{{ comment.user.username }}</a>
+						<div class="d-flex justify-content-between align-items-center">
+							<a class="fw-bold" href="{{ path('app_user', { 'username': comment.user.username }) }}">{{ comment.user.username }}</a>
+							<div class="date">
+								{{ comment.getCreatedAt().format('d/m/Y') }}
+							</div>
+						</div>
 						<p class="mb-0">{{ comment.message }}</p>
-					</div>
-					<div class="d-flex justify-content-end">
-						{{ comment.getCreatedAt().format('d/m/Y') }}
 					</div>
 				</div>
 			{% endfor %}

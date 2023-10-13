@@ -23,7 +23,7 @@
 	<div class="banner">
 		<div class="container h-100">
 			<div class="row align-items-center justify-content-center h-100">
-				<div class="col-md-4 text-center">
+				<div class="col-10 text-center">
 					<h1 class="display-5 fw-bolder text-white">
 						<div class="no-label mb-3">
 							{{ form_widget(trickForm.name) }}
@@ -47,7 +47,8 @@
 
 {% block body %}
 	<div class="row row-img-vid justify-content-center">
-		{% if trick.images %}
+		{% set medias = false %}
+		{% if trick.images.first() %}
 			{% for index, image in trick.images %}
 				{% if index is not same as 0 %}
 					<div class="container-image" data="image" data-input="trick_form_images_{{ index }}_name" id="container_trick_form_images_{{ index }}_name">
@@ -63,6 +64,7 @@
 							</div>
 						</div>
 					</div>
+					{% set medias = true %}
 				{% endif %}
 			{% endfor %}
 			<div class="images d-none mb-3">
@@ -71,7 +73,7 @@
 				{{ form_errors(trickForm.images) }}
 			</div>
 		{% endif %}
-		{% if trick.videos %}
+		{% if trick.videos.first() %}
 			{% for index, video in trick.videos %}
 				<div class="container-video" data="video" data-input="trick_form_videos_{{ index }}_name" id="container_trick_form_videos_{{ index }}_name">
 					<div class=" wrapper d-flex align-items-center m-3" style=" width: 18rem; height: 162px;">
@@ -86,6 +88,7 @@
 						</div>
 					</div>
 				</div>
+				{% set medias = true %}
 			{% endfor %}
 			<div class="videos d-none mb-3">
 				{{ form_widget(trickForm.videos) }}
@@ -128,8 +131,17 @@
 			</div>
 		</div>
 	</div>
+	{% if medias %}
+		<div class="row row-btn-medias justify-content-center">
+			<div class="col-10 d-flex justify-content-center">
+				<div class="btn btn-secondary">
+					Voir les images et vidéos
+				</div>
+			</div>
+		</div>
+	{% endif %}
 	<div class="row justify-content-center mt-5">
-		<div class="col-md-8">
+		<div class="col-lg-10 col-10">
 			<div class="form-floating mb-3">
 				{{ form_widget(trickForm.description) }}
 				{{ form_label(trickForm.description) }}
@@ -137,14 +149,14 @@
 			</div>
 		</div>
 	</div>
-	<div class="row justify-content-center py-4">
-		<div class="col-md-4">
+	<div class="row justify-content-center rg-10 py-4">
+		<div class="col-md-3 col-10">
 			{{ form_widget(trickForm.category) }}
 			{{ form_label(trickForm.category) }}
 			{{ form_errors(trickForm.category) }}
 		</div>
-		<div class="col-md-1"></div>
-		<div class="col-md-3">
+		<div class="col-md-4"></div>
+		<div class="col-md-3 col-10">
 			<div class="d-flex justify-content-between">
 				<div class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-trick">Supprimer la figure</div>
 				<button class="btn btn-primary" id="submitButton" type="submit">Sauvegarder</button>

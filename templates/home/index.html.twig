@@ -26,9 +26,9 @@
 {% endblock %}
 
 {% block body %}
-	<div class="row row-tricks pt-4" id="tricks">
+	<div class="row row-tricks justify-content-center pt-4" id="tricks">
 		{% for trick in tricks %}
-			<div class="col-5ths mb-5">
+			<div class="col-responsive mb-5">
 				<div class="card card-trick shadow border-0">
 					{% set trickImage = trick.images.first() ? '/assets/img/tricks/' ~ trick.images.first().name : '/assets/img/snowtricks_banner.jpg' %}
 					<img class="card-img-top" src="{{ trickImage }}" alt="Figure image"/>
