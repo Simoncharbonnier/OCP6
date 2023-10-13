@@ -86,8 +86,21 @@
 				</div>
 			{% endif %}
 			{% if trick.category %}
-				<div class="card-info">
+				<div class="card-info category" data-bs-toggle="modal" data-bs-target="#modal-category">
 					{{ trick.category.name }}
+				</div>
+				<div class="modal fade" id="modal-category" tabindex="-1" aria-labelledby="modal-category-label" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="modal-category-label">{{ trick.category.name }}</h5>
+								<button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body text-center">
+								<p>{{ trick.category.description }}</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			{% endif %}
 		</div>

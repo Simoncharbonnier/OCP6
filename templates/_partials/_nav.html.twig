@@ -33,4 +33,43 @@
 			</ul>
 		</div>
 	</div>
+	<div class="container">
+		<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+			<div class="d-flex align-items-center justify-content-around">
+				<li class="nav-item">
+					<a class="nav-link icon" href="{{ path('app_home') }}">
+						<img src="/assets/img/icons/home.svg" alt="home">
+					</a>
+				</li>
+				{% if app.user %}
+					<li class="nav-item">
+						<a class="nav-link icon" href="{{ path('app_trick_new') }}">
+							<img src="/assets/img/icons/add_white.svg" alt="add">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link icon" href="{{ path('app_user', { 'username': app.user.username }) }}">
+							<img src="/assets/img/icons/profile.svg" alt="profile">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link icon" href="{{ path('app_logout') }}">
+							<img src="/assets/img/icons/logout.svg" alt="logout">
+						</a>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link icon" href="{{ path('app_register') }}">
+							<img src="/assets/img/icons/register.svg" alt="register">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link icon" href="{{ path('app_login') }}">
+							<img src="/assets/img/icons/login.svg" alt="login">
+						</a>
+					</li>
+				{% endif %}
+			</div>
+		</ul>
+	</div>
 </nav>
