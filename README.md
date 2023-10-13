@@ -16,9 +16,49 @@ Cloner mon projet
 gh repo clone https://github.com/Simoncharbonnier/OCP6.git
 ```
 
--  Expliquer ce qu'il faut modifier dans .env/.env.local (MAILER_DSN & DATABASE_URL)
--  Expliquer comment créer la base de données et lancer DataFixtures
--  Expliquer comment lancer symfony
+Modifier les variables d'environnement DATABASE_URL & MAILER_DSN dans .env ou .env.local
+
+```bash
+DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=14&charset=utf8"
+MAILER_DSN=smtp://user:pass@smtp.example.com:port
+```
+
+Installer les dépendances avec Composer
+
+```bash
+composer install
+```
+
+Créer la base de données
+
+```bash
+php bin/console doctrine:database:create
+```
+
+Créer les tables de la base de données
+
+```bash
+php bin/console doctrine:migrations:migrate
+```
+
+Insérer un jeu de données
+
+```bash
+php bin/console doctrine:fixtures:load
+```
+
+Lancer Symfony
+
+```bash
+symfony server:start
+```
+
+Se connecter avec les identifiants suivant
+
+```bash
+nom d'utilisateur: john
+mot de passe: secret
+```
 
 Et tout devrait fonctionner sans soucis !
 
