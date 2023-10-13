@@ -38,7 +38,7 @@ php bin/console doctrine:database:create
 Créer les tables de la base de données
 
 ```bash
-php bin/console doctrine:migrations:migrate
+php bin/console doctrine:schema:update --force
 ```
 
 Insérer un jeu de données
