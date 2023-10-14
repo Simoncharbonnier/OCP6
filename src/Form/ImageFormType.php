@@ -19,8 +19,7 @@ class ImageFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

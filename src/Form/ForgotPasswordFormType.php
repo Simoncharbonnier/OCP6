@@ -25,8 +25,7 @@ class ForgotPasswordFormType extends AbstractType
                         'message' => 'Votre nom d\'utilisateur ne peut être vide.'
                     ])
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -27,8 +27,7 @@ class CommentFormType extends AbstractType
                         'message' => 'Votre message ne peut être vide.'
                     ])
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

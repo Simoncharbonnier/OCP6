@@ -38,8 +38,7 @@ class ResetPasswordFormType extends AbstractType
                         'message' => 'Votre mot de passe ne peut être vide.'
                     ])
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
