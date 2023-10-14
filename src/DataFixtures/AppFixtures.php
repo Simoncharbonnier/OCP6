@@ -15,6 +15,7 @@ use App\Entity\Comment;
 
 class AppFixtures extends Fixture
 {
+
     private UserPasswordHasherInterface $hasher;
 
     public function __construct(UserPasswordHasherInterface $hasher)
@@ -22,6 +23,12 @@ class AppFixtures extends Fixture
         $this->hasher = $hasher;
     }
 
+    /**
+     * Load data in database
+     * @param ObjectManager $manager
+     *
+     * @return void
+     */
     public function load(ObjectManager $manager): void
     {
         // CATEGORIES

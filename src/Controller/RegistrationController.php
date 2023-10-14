@@ -18,7 +18,9 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
+
     private EmailVerifier $emailVerifier;
+
     private UserRepository $userRepository;
 
     public function __construct(EmailVerifier $emailVerifier, UserRepository $userRepository)
@@ -27,6 +29,14 @@ class RegistrationController extends AbstractController
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * Register page or register user and send email
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param EntityManagerInterface $entityManager
+     *
+     * @return Response
+     */
     #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
@@ -62,17 +72,24 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    /**
+     * Verify user email
+     * @param Request $request
+     * @param UserRepository $userRepository
+     *
+     * @return Response
+     */
     #[Route('/activer-compte', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {
         $id = $request->query->get('id');
-        if (null === $id) {
+        if ($id === null) {
             $this->addFlash('danger', 'Un problème est survenu.');
             return $this->redirectToRoute('app_register');
         }
 
         $user = $userRepository->find($id);
-        if (null === $user) {
+        if ($user === null) {
             $this->addFlash('danger', 'Un problème est survenu.');
             return $this->redirectToRoute('app_register');
         }

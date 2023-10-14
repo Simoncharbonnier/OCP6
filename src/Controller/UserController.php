@@ -13,6 +13,13 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
+    /**
+     * User details
+     * @param string $username
+     * @param UserRepository $userRepository
+     *
+     * @return Response
+     */
     #[Route('/profil/{username}', name: 'app_user')]
     public function index(
         string $username,
@@ -32,6 +39,16 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * Edit user
+     * @param string $username
+     * @param UserRepository $userRepository
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     *
+     * @return Response
+     */
     #[Route('/modifier-profil/{username}', name: 'app_user_edit')]
     public function edit(
         string $username,

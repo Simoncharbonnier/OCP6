@@ -20,6 +20,12 @@ use Symfony\Component\Mime\Address;
 
 class SecurityController extends AbstractController
 {
+    /**
+     * Login
+     * @param AuthenticationUtils $authenticationUtils
+     *
+     * @return Response
+     */
     #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -36,12 +42,27 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * Logout
+     * @return void
+     * @throws LogicException
+     */
     #[Route(path: '/déconnexion', name: 'app_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
+    /**
+     * Forgot password page or send email to reset password
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param TokenGeneratorInterface $tokenGenerator
+     * @param EntityManagerInterface $entityManager
+     * @param EmailVerifier $emailVerifier
+     *
+     * @return Response
+     */
     #[Route('/mot-de-passe-oublié', name:'app_forgot')]
     public function forgottenPassword(
         Request $request,
@@ -86,6 +107,16 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * Reset password
+     * @param string $token
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param EntityManagerInterface $entityManager
+     * @param UserPasswordHasherInterface $passwordHasher
+     *
+     * @return Response
+     */
     #[Route('/réinitialisation-mot-de-passe/{token}', name:'app_reset')]
     public function resetPassword(
         string $token,

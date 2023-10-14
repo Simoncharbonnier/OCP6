@@ -17,6 +17,16 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class TrickController extends AbstractController
 {
+    /**
+     * Trick details
+     * @param string $slug
+     * @param TrickRepository $trickRepository
+     * @param EntityManagerInterface $entityManager
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     *
+     * @return Response
+     */
     #[Route('/figure/{slug}', name: 'app_trick')]
     public function index(
         string $slug,
@@ -66,6 +76,13 @@ class TrickController extends AbstractController
         ]);
     }
 
+    /**
+     * Add trick
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     *
+     * @return Response
+     */
     #[Route('/ajouter-figure', name: 'app_trick_new')]
     public function new(
         EntityManagerInterface $entityManager,
@@ -127,6 +144,15 @@ class TrickController extends AbstractController
         ]);
     }
 
+    /**
+     * Edit trick
+     * @param string $slug
+     * @param TrickRepository $trickRepository
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     *
+     * @return Response
+     */
     #[Route('/modifier-figure/{slug}', name: 'app_trick_edit')]
     public function edit(
         string $slug,
@@ -213,6 +239,14 @@ class TrickController extends AbstractController
         ]);
     }
 
+    /**
+     * Delete trick
+     * @param string $slug
+     * @param TrickRepository $trickRepository
+     * @param EntityManagerInterface $entityManager
+     *
+     * @return Response
+     */
     #[Route('/supprimer-figure/{slug}', name: 'app_trick_delete')]
     public function delete(
         string $slug,

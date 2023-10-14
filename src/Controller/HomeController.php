@@ -11,6 +11,14 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class HomeController extends AbstractController
 {
+    /**
+     * Home page
+     * @param TrickRepository $trickRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     *
+     * @return Response
+     */
     #[Route('/', name: 'app_home')]
     public function index(TrickRepository $trickRepository, PaginatorInterface $paginator, Request $request): Response
     {
