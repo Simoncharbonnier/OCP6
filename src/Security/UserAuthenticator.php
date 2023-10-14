@@ -30,6 +30,13 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $this->registry = $registry;
     }
 
+    /**
+     * Authenticate
+     * @param Request $request request
+     *
+     * @return Passport
+     * @throws CustomUserMessageAuthenticateException
+     */
     public function authenticate(Request $request): Passport
     {
         $username = $request->request->get('username', '');
@@ -56,6 +63,14 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         );
     }
 
+    /**
+     * Authentication success
+     * @param Request $request request
+     * @param TokenInterface $token token
+     * @param string $firewallName firewall name
+     *
+     * @return ?Response
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
@@ -65,6 +80,12 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
     }
 
+    /**
+     * Get login url
+     * @param Request $request request
+     *
+     * @return string
+     */
     protected function getLoginUrl(Request $request): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);

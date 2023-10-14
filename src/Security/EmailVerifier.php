@@ -19,6 +19,14 @@ class EmailVerifier
     ) {
     }
 
+    /**
+     * Send email confirmation
+     * @param string $verifyEmailRouteName verify email route name
+     * @param UserInterface $user user
+     * @param TemplatedEmail $email email
+     *
+     * @return void
+     */
     public function sendEmailConfirmation(string $verifyEmailRouteName, UserInterface $user, TemplatedEmail $email): void
     {
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
@@ -39,6 +47,11 @@ class EmailVerifier
     }
 
     /**
+     * Handle email confirmation
+     * @param Request $request request
+     * @param UserInterface $user user
+     *
+     * @return void
      * @throws VerifyEmailExceptionInterface
      */
     public function handleEmailConfirmation(Request $request, UserInterface $user): void
@@ -51,6 +64,14 @@ class EmailVerifier
         $this->entityManager->flush();
     }
 
+    /**
+     * Send email reset password
+     * @param string $url url
+     * @param UserInterface $user user
+     * @param TemplatedEmail $email email
+     *
+     * @return void
+     */
     public function sendEmailResetPassword(string $url, UserInterface $user, TemplatedEmail $email): void
     {
         $context = $email->getContext();
