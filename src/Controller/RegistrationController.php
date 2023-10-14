@@ -31,9 +31,9 @@ class RegistrationController extends AbstractController
 
     /**
      * Register page or register user and send email
-     * @param Request $request
-     * @param UserPasswordHasherInterface $userPasswordHasher
-     * @param EntityManagerInterface $entityManager
+     * @param Request $request request
+     * @param UserPasswordHasherInterface $userPasswordHasher password hasher
+     * @param EntityManagerInterface $entityManager entity manager
      *
      * @return Response
      */
@@ -74,8 +74,8 @@ class RegistrationController extends AbstractController
 
     /**
      * Verify user email
-     * @param Request $request
-     * @param UserRepository $userRepository
+     * @param Request $request request
+     * @param UserRepository $userRepository user repository
      *
      * @return Response
      */

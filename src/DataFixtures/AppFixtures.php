@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
 
     /**
      * Load data in database
-     * @param ObjectManager $manager
+     * @param ObjectManager $manager object manager
      *
      * @return void
      */

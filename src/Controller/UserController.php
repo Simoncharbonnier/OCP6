@@ -15,8 +15,8 @@ class UserController extends AbstractController
 {
     /**
      * User details
-     * @param string $username
-     * @param UserRepository $userRepository
+     * @param string $username username
+     * @param UserRepository $userRepository user repository
      *
      * @return Response
      */
@@ -41,11 +41,11 @@ class UserController extends AbstractController
 
     /**
      * Edit user
-     * @param string $username
-     * @param UserRepository $userRepository
-     * @param EntityManagerInterface $entityManager
-     * @param Request $request
-     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param string $username username
+     * @param UserRepository $userRepository user repository
+     * @param EntityManagerInterface $entityManager entity manager
+     * @param Request $request request
+     * @param UserPasswordHasherInterface $userPasswordHasher password hasher
      *
      * @return Response
      */

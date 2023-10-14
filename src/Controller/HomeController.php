@@ -13,9 +13,9 @@ class HomeController extends AbstractController
 {
     /**
      * Home page
-     * @param TrickRepository $trickRepository
-     * @param PaginatorInterface $paginator
-     * @param Request $request
+     * @param TrickRepository $trickRepository trick repository
+     * @param PaginatorInterface $paginator paginator
+     * @param Request $request request
      *
      * @return Response
      */

@@ -19,11 +19,11 @@ class TrickController extends AbstractController
 {
     /**
      * Trick details
-     * @param string $slug
-     * @param TrickRepository $trickRepository
-     * @param EntityManagerInterface $entityManager
-     * @param PaginatorInterface $paginator
-     * @param Request $request
+     * @param string $slug trick slug
+     * @param TrickRepository $trickRepository trick repository
+     * @param EntityManagerInterface $entityManager entity manager
+     * @param PaginatorInterface $paginator paginator
+     * @param Request $request request
      *
      * @return Response
      */
@@ -78,8 +78,8 @@ class TrickController extends AbstractController
 
     /**
      * Add trick
-     * @param EntityManagerInterface $entityManager
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager entity manager
+     * @param Request $request request
      *
      * @return Response
      */
@@ -146,10 +146,10 @@ class TrickController extends AbstractController
 
     /**
      * Edit trick
-     * @param string $slug
-     * @param TrickRepository $trickRepository
-     * @param EntityManagerInterface $entityManager
-     * @param Request $request
+     * @param string $slug trick slug
+     * @param TrickRepository $trickRepository trick repository
+     * @param EntityManagerInterface $entityManager entity manager
+     * @param Request $request request
      *
      * @return Response
      */
@@ -241,9 +241,9 @@ class TrickController extends AbstractController
 
     /**
      * Delete trick
-     * @param string $slug
-     * @param TrickRepository $trickRepository
-     * @param EntityManagerInterface $entityManager
+     * @param string $slug trick slug
+     * @param TrickRepository $trickRepository trick repository
+     * @param EntityManagerInterface $entityManager entity manager
      *
      * @return Response
      */

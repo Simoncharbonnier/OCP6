@@ -22,7 +22,7 @@ class SecurityController extends AbstractController
 {
     /**
      * Login
-     * @param AuthenticationUtils $authenticationUtils
+     * @param AuthenticationUtils $authenticationUtils authentication utils
      *
      * @return Response
      */
@@ -55,11 +55,11 @@ class SecurityController extends AbstractController
 
     /**
      * Forgot password page or send email to reset password
-     * @param Request $request
-     * @param UserRepository $userRepository
-     * @param TokenGeneratorInterface $tokenGenerator
-     * @param EntityManagerInterface $entityManager
-     * @param EmailVerifier $emailVerifier
+     * @param Request $request request
+     * @param UserRepository $userRepository user repository
+     * @param TokenGeneratorInterface $tokenGenerator token generator
+     * @param EntityManagerInterface $entityManager entity manager
+     * @param EmailVerifier $emailVerifier email verifier
      *
      * @return Response
      */
@@ -109,11 +109,11 @@ class SecurityController extends AbstractController
 
     /**
      * Reset password
-     * @param string $token
-     * @param Request $request
-     * @param UserRepository $userRepository
-     * @param EntityManagerInterface $entityManager
-     * @param UserPasswordHasherInterface $passwordHasher
+     * @param string $token reset token
+     * @param Request $request request
+     * @param UserRepository $userRepository user repository
+     * @param EntityManagerInterface $entityManager entity manager
+     * @param UserPasswordHasherInterface $passwordHasher password hasher
      *
      * @return Response
      */
