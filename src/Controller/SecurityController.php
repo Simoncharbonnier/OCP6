@@ -98,7 +98,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('app_login');
             }
 
-            $this->addFlash('danger', 'Un problème est survenu.');
+            $this->addFlash('danger', 'L\'utilisateur n\'existe pas.');
             return $this->redirectToRoute('app_login');
         }
 

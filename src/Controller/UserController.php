@@ -55,7 +55,7 @@ class UserController extends AbstractController
         UserRepository $userRepository,
         EntityManagerInterface $entityManager,
         Request $request,
-        UserPasswordHasherInterface $userPasswordHasher
+        UserPasswordHasherInterface $passwordHasher
     ): Response
     {
         $user = $userRepository->findBy(['username' => $username]);
@@ -76,12 +76,10 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            if (!$passwordHasher->isPasswordValid($user, $form->get('plainPassword')->getData())) {
+                $this->addFlash('danger', 'Le mot de passe est invalide.');
+                return $this->redirectToRoute('app_user', [ 'username' => $username ]);
+            }
 
             if (preg_match('/^data:image\/(png|jpg|jpeg);base64,/', $user->getAvatar()) === 1) {
                 $avatarData = base64_decode(preg_replace('/^data:image\/(png|jpg|jpeg);base64,/', '', $user->getAvatar()));
@@ -89,6 +87,8 @@ class UserController extends AbstractController
                 $user->setAvatar($user->getId().'.jpg');
             } else if ($user->getAvatar() === null && $issetAvatar) {
                 unlink('assets/img/users/'.$user->getId().'.jpg');
+            } else if ($user->getAvatar() === 'null') {
+                $user->setAvatar(null);
             }
 
             $entityManager->persist($user);

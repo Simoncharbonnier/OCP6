@@ -20,7 +20,7 @@ class UserFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez votre nom d\'utilisateur'
+                    'placeholder' => 'Entrez votre nouveau nom d\'utilisateur'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -32,7 +32,7 @@ class UserFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez votre nouveau mot de passe',
+                    'placeholder' => 'Entrez votre mot de passe',
                     'autocomplete' => 'new-password'
                 ],
                 'mapped' => false,

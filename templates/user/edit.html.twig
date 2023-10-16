@@ -13,6 +13,9 @@
 	<div class="row my-5">
 		<div class="col-12 d-flex justify-content-center align-items-center">
 			<div class="d-flex align-items-center">
+				<div class="icon delete-avatar {{ user.avatar ? '' : 'd-none' }}">
+					<img src="/assets/img/icons/close.svg" alt="Delete avatar">
+				</div>
 				{% set avatar = user.avatar ? '/assets/img/users/' ~ user.avatar : 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' %}
 				<div class="flex-shrink-0 mr-3 avatar edit"><img class="rounded-circle" src="{{ avatar }}" alt="{{ user.username }} avatar"/></div>
 				<h1 class="mb-0">Modifier le profil</h1>
