@@ -75,7 +75,7 @@ class SecurityController extends AbstractController
         $form = $this->createForm(ForgotPasswordFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $user = $userRepository->findOneBy(['username' => $form->get('username')->getData()]);
 
             if ($user) {
@@ -132,7 +132,17 @@ class SecurityController extends AbstractController
             $form = $this->createForm(ResetPasswordFormType::class);
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted()) {
+                if ($user->getUsername() !== $form->get('username')->getData()) {
+                    $this->addFlash('danger', 'Veuillez vérifier le nom d\'utilisateur.');
+                    return $this->redirectToRoute('app_reset', [ 'token' => $token ]);
+                }
+
+                if (strlen($form->get('password')->getData()) < 6) {
+                    $this->addFlash('danger', 'Le mot de passe doit faire au moins 6 caractères.');
+                    return $this->redirectToRoute('app_reset', [ 'token' => $token ]);
+                }
+
                 $user->setResetToken(null);
                 $user->setPassword(
                     $passwordHasher->hashPassword(
